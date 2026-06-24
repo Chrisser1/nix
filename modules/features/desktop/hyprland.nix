@@ -76,9 +76,6 @@
       enable = true;
       configType = "lua";
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      plugins = [
-        inputs.split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.split-monitor-workspaces
-      ];
 
       extraConfig = ''
         local mod = "SUPER"
@@ -171,9 +168,8 @@
 
         local _hypr_dir = (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")) .. "/hypr"
         package.path = _hypr_dir .. "/?.lua;" .. package.path
-        package.path = package.path .. ";" .. _hypr_dir .. "/plugins/split-monitor-workspaces/lua/?.lua"
         require("noctalia").apply_theme()
-        local smw = require("split-monitor-workspaces")
+        local smw = require("plugins.split-monitor-workspaces")
         smw.setup({ workspace_count = 9 })
         dofile(_hypr_dir .. "/monitors.lua")
         dofile(_hypr_dir .. "/noctalia-extra.lua")
@@ -229,8 +225,8 @@
         hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
         for i = 1, 9 do
-          hl.bind(mod .. " + " .. i,         smw.workspace(i))
-          hl.bind(mod .. " + SHIFT + " .. i, smw.move_to_workspace_silent(i))
+          hl.bind(mod .. " + " .. i,         smw.workspace(tostring(i)))
+          hl.bind(mod .. " + SHIFT + " .. i, smw.move_to_workspace_silent(tostring(i)))
         end
       '';
     };
