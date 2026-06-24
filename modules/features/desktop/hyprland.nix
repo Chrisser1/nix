@@ -1,13 +1,5 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.hyprland = {
-    pkgs,
-    lib,
-    ...
-  }: {
+{ self, inputs, ... }: {
+  flake.nixosModules.hyprland = { pkgs, lib, ... }: {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.hyprland = {

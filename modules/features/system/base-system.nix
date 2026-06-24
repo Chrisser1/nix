@@ -1,9 +1,5 @@
 { self, ... }: {
-  flake.nixosModules.base-system = {
-    pkgs,
-    secrets,
-    ...
-  }: {
+  flake.nixosModules.base-system = { pkgs, secrets, ... }: {
     # Needed by GTK applications
     programs.dconf.enable = true;
 

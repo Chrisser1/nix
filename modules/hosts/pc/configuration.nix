@@ -1,4 +1,4 @@
-{self, ...}: {
+{ self, ... }: {
   flake.nixosModules.pc-configuration = {
     config,
     pkgs,
@@ -12,7 +12,7 @@
     networking.hostName = "pc";
     system.stateVersion = "25.05";
 
-    # --- NVIDIA ---
+    # NVIDIA
     services.xserver.videoDrivers = ["nvidia"];
     hardware.nvidia = {
       modesetting.enable = true;

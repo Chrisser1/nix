@@ -1,8 +1,4 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{ self, inputs, ... }: {
   flake.nixosModules.noctalia = {...}: {
     imports = [inputs.noctalia.nixosModules.default];
     nix.settings.extra-substituters = ["https://noctalia.cachix.org"];
@@ -14,11 +10,8 @@
     };
   };
 
-  flake.homeModules.noctalia = {
-    pkgs,
-    lib,
-    ...
-  }: let
+  flake.homeModules.noctalia = { pkgs, lib, ... }: 
+  let
     hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
     noctaliaHyprExtra = pkgs.writeShellScriptBin "noctalia-hypr-extra" ''
       colors="$HOME/.config/noctalia/colors.json"

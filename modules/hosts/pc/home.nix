@@ -1,10 +1,5 @@
-{self, ...}: {
-  flake.homeModules.pc-home = {
-    config,
-    pkgs,
-    inputs,
-    ...
-  }: {
+{ self, ... }: {
+  flake.homeModules.pc-home = { config, pkgs, inputs, ... }: {
     home.stateVersion = "25.05";
 
     # Hardware video decode (NVDEC) via nvidia-vaapi-driver.

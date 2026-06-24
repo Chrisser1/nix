@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.homeModules.wdisplays = {pkgs, ...}: let
+  flake.homeModules.wdisplays = { pkgs, ... }: let
     hyprlandPkg = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     realHyprctl = "${hyprlandPkg}/bin/hyprctl";
 

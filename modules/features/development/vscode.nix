@@ -1,14 +1,10 @@
-{inputs, ...}: {
+{ inputs, ... }: {
   flake.nixosModules.vscode = {...}: {
     nixpkgs.overlays = [inputs.nix-vscode-extensions.overlays.default];
   };
 
-  flake.homeModules.vscode = {
-    pkgs,
-    config,
-    lib,
-    ...
-  }: let
+  flake.homeModules.vscode = { pkgs, config, lib, ... }: 
+  let
     marketplace = pkgs.vscode-marketplace;
 
     commonExtensions = with marketplace; [

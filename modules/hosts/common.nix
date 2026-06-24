@@ -1,8 +1,4 @@
-{
-  self,
-  inputs,
-  ...
-}: {
+{ self, inputs, ... }: {
   flake.nixosModules.desktop-host = {...}: {
     imports = [
       self.nixosModules.base-system
