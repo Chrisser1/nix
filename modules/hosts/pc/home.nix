@@ -15,19 +15,5 @@
       "media.ffmpeg.vaapi.enabled" = true; # pre-137 fallback, harmless now
       "media.rdd-ffmpeg.enabled" = true;
     };
-
-    wayland.windowManager.hyprland.settings = {
-      monitor = [
-        # Middle monitor (ASUS)
-        # "DP-1,highrr,0x0,1"
-        "DP-4,highrr,0x0,1"
-
-        # Left monitor (HP)
-        "HDMI-A-2,1920x1080,auto-left,1"
-
-        ## Right monitor (HP)
-        # "HDMI-A-2,highrr,auto-left,1"
-      ];
-    };
   };
 }
