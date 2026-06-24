@@ -1,11 +1,5 @@
 {self, ...}: {
   flake.homeModules.appearance = {pkgs, ...}: {
-    # MIME App Defaults
-    xdg.mimeApps.defaultApplications."x-scheme-handler/jetbrains" = "jetbrains-toolbox.desktop";
-
-    # Dark mode hints for apps that read settings.ini directly.
-    # color-scheme and gtk-theme are intentionally omitted here — noctalia owns those
-    # and sets them via gsettings when you switch themes.
     gtk = {
       enable = true;
       gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
