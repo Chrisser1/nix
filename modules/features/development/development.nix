@@ -8,17 +8,12 @@
       dbeaver-bin
       jetbrains.datagrip
       
-      # .NET
-      dotnet-sdk
-      nuget
-      jetbrains.rider
-      
       # Go
       go
       gcc
       gopls   
       delve   
-      jetbrains.goland
+      # jetbrains.goland
       
       # Java
       jdk25
@@ -41,17 +36,11 @@
 
     # --- Session Paths ---
     home.sessionPath = [
-      "${config.home.homeDirectory}/.dotnet/tools"
       "${config.home.homeDirectory}/go/bin"
     ];
 
     # --- Session Variables ---
     home.sessionVariables = {
-      # .NET
-      DOTNET_CLI_TELEMETRY_OPTOUT = "1";   
-      DOTNET_NOLOGO = "1";                 
-      DOTNET_ROOT = "${dotnet-sdk}";       
-      
       # Go
       GOPATH = "${config.home.homeDirectory}/go";
       
@@ -63,7 +52,7 @@
       ];
     };
 
-    # --- JDK Source Linking ---
+    # JDK Source Linking
     home.file.".jdks/nixos-jdk25".source = "${pkgs.jdk25}/lib/openjdk";
   };
 }

@@ -1,5 +1,4 @@
 {self, ...}: {
-  # Games and launchers for desktop hosts
   flake.nixosModules.gaming = {pkgs, ...}: {
     programs.steam = {
       enable = true;

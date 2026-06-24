@@ -4,7 +4,10 @@
     secrets,
     ...
   }: {
+    # Needed by GTK applications
     programs.dconf.enable = true;
+
+    # Needed for dynamic linking as NixOs doesn't follow standard file structure
     programs.nix-ld.enable = true;
     programs.nix-ld.libraries = with pkgs; [
       stdenv.cc.cc.lib
@@ -31,8 +34,6 @@
 
     # Flakes, store maintenance
     nix.settings.experimental-features = ["nix-command" "flakes"];
-    nix.settings.extra-substituters = ["https://noctalia.cachix.org"];
-    nix.settings.extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
     nix.settings.auto-optimise-store = true;
     nix.gc = {
       automatic = true;
@@ -59,18 +60,9 @@
 
     # Networking & Security
     networking.networkmanager.enable = true;
-    services.tailscale.enable = true;
     networking.firewall = {
       enable = true;
       allowedTCPPorts = [9001 6000];
-      allowedUDPPortRanges = [
-        {
-          from = 50000;
-          to = 65535;
-        }
-      ];
-      checkReversePath = false;
-      trustedInterfaces = ["tailscale0"];
     };
 
     # Audio (PipeWire)
@@ -90,7 +82,6 @@
     services.udisks2.enable = true;
     services.devmon.enable = true;
 
-    users.groups.nixos-admins = {};
     security.sudo.enable = true;
     programs.fuse.userAllowOther = true;
 

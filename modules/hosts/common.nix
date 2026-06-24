@@ -1,7 +1,12 @@
-{ self, inputs, ...}: {
-  flake.nixosModules.desktop-host = { ... }: {
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.desktop-host = {...}: {
     imports = [
       self.nixosModules.base-system
+      self.nixosModules.tailscale
       self.nixosModules.desktop
       self.nixosModules.users
       self.nixosModules.docker
