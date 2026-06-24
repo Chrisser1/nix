@@ -50,6 +50,10 @@
       fi
     '';
 
+    home.file.".config/hypr/plugins/split-monitor-workspaces" = {
+      source = inputs.split-monitor-workspaces;
+    };
+
     home.activation.hyprMonitorsConf = lib.hm.dag.entryBefore ["writeBoundary"] ''
       if [ -L "$HOME/.config/hypr/monitors.lua" ]; then
         rm "$HOME/.config/hypr/monitors.lua"
@@ -167,7 +171,10 @@
 
         local _hypr_dir = (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")) .. "/hypr"
         package.path = _hypr_dir .. "/?.lua;" .. package.path
+        package.path = package.path .. ";" .. _hypr_dir .. "/plugins/split-monitor-workspaces/lua/?.lua"
         require("noctalia").apply_theme()
+        local smw = require("split-monitor-workspaces")
+        smw.setup({ workspace_count = 9 })
         dofile(_hypr_dir .. "/monitors.lua")
         dofile(_hypr_dir .. "/noctalia-extra.lua")
 
@@ -222,8 +229,8 @@
         hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
         for i = 1, 9 do
-          hl.bind(mod .. " + " .. i,         hl.dsp.focus({ workspace = i }))
-          hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+          hl.bind(mod .. " + " .. i,         smw.workspace(i))
+          hl.bind(mod .. " + SHIFT + " .. i, smw.move_to_workspace_silent(i))
         end
       '';
     };
