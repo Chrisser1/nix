@@ -1,13 +1,7 @@
 {self, ...}: {
-  flake.nixosModules.laptop-configuration = {
-    config,
-    pkgs,
-    inputs,
-    lib,
-    ...
-  }: {
+  flake.nixosModules.laptop-configuration = { config, pkgs, inputs, lib, ... }: {
     networking.hostName = "laptop";
-    system.stateVersion = "25.05";
+    system.stateVersion = "26.05";
 
     imports = [
       self.nixosModules.laptop-hardware

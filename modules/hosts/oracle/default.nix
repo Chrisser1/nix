@@ -1,7 +1,10 @@
 { self, inputs, ... }: 
 let
     system = "aarch64-linux";
-    commonArgs = { inherit inputs; secrets = import "/home/chris/nixos/secrets.nix"; };
+    commonArgs = { 
+        inherit inputs; 
+        secrets = import "/home/chris/nixos/secrets.nix";
+    };
 in {
     flake.nixosConfigurations.oracle = inputs.nixpkgs.lib.nixosSystem {
     inherit system;
