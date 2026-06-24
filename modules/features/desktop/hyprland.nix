@@ -1,18 +1,11 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.hyprland = {
-    pkgs,
-    lib,
-    ...
-  }: {
+{ self, inputs, ... }: {
+  flake.nixosModules.hyprland = { pkgs, lib, ... }: {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
       xwayland.enable = true;
     };
 
@@ -26,62 +19,18 @@
       };
 
       extraPortals = lib.mkForce [
-        pkgs.xdg-desktop-portal-hyprland
+        inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
         pkgs.xdg-desktop-portal-gtk
       ];
     };
   };
 
-  flake.homeModules.hyprland = {
-    pkgs,
-    config,
-    lib,
-    ...
-  }: let
+  flake.homeModules.hyprland = { pkgs, config, lib, ... }: let
     terminal = "${pkgs.kitty}/bin/kitty";
     mod = "SUPER";
     fm = "${pkgs.nautilus}/bin/nautilus";
-
-    hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
-
-    noctaliaHyprExtra = pkgs.writeShellScriptBin "noctalia-hypr-extra" ''
-      colors="$HOME/.config/noctalia/colors.json"
-      out="$HOME/.config/hypr/noctalia-extra.conf"
-      get() { awk -F'"' -v k="$1" '$2==k{gsub("#","",$(NF-1));print $(NF-1)}' "$colors" 2>/dev/null; }
-      if [ -f "$colors" ]; then
-        on_sec=$(get mOnSecondary)
-        on_surf=$(get mOnSurface)
-      fi
-      on_sec=''${on_sec:-000000}
-      on_surf=''${on_surf:-d1d1c7}
-
-      # Persist for next hyprland startup
-      printf 'group:groupbar:text_color = rgb(%s)\ngroup:groupbar:text_color_inactive = rgb(%s)\n' \
-        "$on_sec" "$on_surf" > "$out"
-
-      # Apply immediately at runtime — avoids race with noctalia.conf reload debounce
-      hypr_sig=$(ls /run/user/$(id -u)/hypr/ 2>/dev/null | head -1)
-      if [ -n "$hypr_sig" ]; then
-        HYPRLAND_INSTANCE_SIGNATURE="$hypr_sig" ${hyprctl} keyword group:groupbar:text_color "rgb(''${on_sec})"
-        HYPRLAND_INSTANCE_SIGNATURE="$hypr_sig" ${hyprctl} keyword group:groupbar:text_color_inactive "rgb(''${on_surf})"
-      fi
-    '';
   in {
-    home.packages = with pkgs; [hyprpicker satty noctaliaHyprExtra];
-
-    systemd.user.services.noctalia-hypr-extra = {
-      Unit.Description = "Update Hyprland extra colors from Noctalia palette";
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${noctaliaHyprExtra}/bin/noctalia-hypr-extra";
-      };
-    };
-
-    systemd.user.paths.noctalia-hypr-extra = {
-      Unit.Description = "Watch Noctalia Hyprland config for palette changes";
-      Path.PathModified = "%h/.config/hypr/noctalia.conf";
-      Install.WantedBy = ["default.target"];
-    };
+    home.packages = with pkgs; [hyprpicker satty];
 
     home.activation.hyprMonitorsConf = lib.hm.dag.entryBefore ["writeBoundary"] ''
       if [ -L "$HOME/.config/hypr/monitors.conf" ]; then
@@ -91,15 +40,6 @@
         mkdir -p "$HOME/.config/hypr"
         touch "$HOME/.config/hypr/monitors.conf"
       fi
-      if [ ! -f "$HOME/.config/hypr/noctalia.conf" ]; then
-        mkdir -p "$HOME/.config/hypr"
-        touch "$HOME/.config/hypr/noctalia.conf"
-      fi
-      if [ ! -f "$HOME/.config/hypr/noctalia-extra.conf" ]; then
-        mkdir -p "$HOME/.config/hypr"
-        touch "$HOME/.config/hypr/noctalia-extra.conf"
-      fi
-      ${noctaliaHyprExtra}/bin/noctalia-hypr-extra || true
     '';
 
     home.pointerCursor = {
@@ -120,11 +60,9 @@
 
       settings = {
         general = {
-          gaps_in = 2;
-          gaps_out = 2;
+          gaps_in = 1;
+          gaps_out = 1;
           border_size = 2;
-          "col.active_border" = "rgba(880808ff)";
-          "col.inactive_border" = "rgba(595959ff)";
           resize_on_border = true;
           allow_tearing = false;
           layout = "dwindle";
@@ -141,7 +79,6 @@
             font_size = 16;
             font_weight_active = "ultraheavy";
             height = 24;
-            "col.locked_active" = "0xfff38ba8";
           };
         };
 
@@ -153,14 +90,13 @@
           inactive_opacity = 1.0;
 
           shadow = {
-            enabled = true;
+            enabled = false;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
           };
 
           blur = {
-            enabled = true;
+            enabled = false;
             size = 3;
             passes = 1;
             vibrancy = 0.1696;
@@ -196,11 +132,7 @@
           ];
         };
 
-        env = [
-          "XCURSOR_THEME,Adwaita"
-          "XCURSOR_SIZE,24"
-          "QT_QPA_PLATFORMTHEME,qt6ct"
-        ];
+        env = [ ];
 
         exec-once = [
           "noctalia --daemon"

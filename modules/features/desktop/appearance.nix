@@ -1,4 +1,4 @@
-{self, ...}: {
+{ self, ... }: {
   flake.homeModules.appearance = {pkgs, ...}: {
     gtk = {
       enable = true;
