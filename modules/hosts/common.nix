@@ -1,12 +1,5 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  # Everything shared by the graphical desktop hosts (laptop, pc).
-  # A host's default.nix only adds its host-configuration module and
-  # its host-specific home module via home-manager.sharedModules.
-  flake.nixosModules.desktop-host = {...}: {
+{ self, inputs, ...}: {
+  flake.nixosModules.desktop-host = { ... }: {
     imports = [
       self.nixosModules.base-system
       self.nixosModules.desktop
@@ -35,7 +28,10 @@
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      extraSpecialArgs = {inherit inputs;};
+      extraSpecialArgs = {
+        inherit inputs;
+        secrets = import "/home/chris/nixos/secrets.nix";
+      };
 
       users.chris.imports = [self.homeModules.profile-chris];
       users.work.imports = [self.homeModules.profile-work];

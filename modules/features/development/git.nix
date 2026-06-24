@@ -1,7 +1,6 @@
 { self, ... }: {
   
-  flake.homeModules.git = { pkgs, ... }: {
-    
+  flake.homeModules.git = { secrets, pkgs, ... }: {
     programs.git = {
       enable = true;
       lfs.enable = true;
@@ -10,23 +9,13 @@
           name = "Chrisser1";
           email = "chrisgthomsen0310@gmail.com";
         };
-
-        url."git@github.com:" = {
-          pushInsteadOf = "https://github.com/";
-        };
       };
     };
 
-    programs.lazygit = {
-      enable = true;
-      settings = {
-        gui.theme = {
-          activeBorderColor = [ "#7F0909" "bold" ];
-          inactiveBorderColor = [ "#a6adc8" ];
-          selectedLineBgColor = [ "#2B2B2B" ];
-        };
-      };
-    };
-    
+    home.file.".netrc".text = ''
+      machine github.com
+      login Chrisser1
+      password ${secrets.githubToken}
+    '';
   };
 }
