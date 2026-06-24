@@ -83,13 +83,9 @@
 
         hl.config({
           general = {
-            gaps_in = 2,
-            gaps_out = 2,
+            gaps_in = 1,
+            gaps_out = 1,
             border_size = 2,
-            col = {
-              active_border   = "rgba(880808ff)",
-              inactive_border = "rgba(595959ff)",
-            },
             resize_on_border = true,
             allow_tearing    = false,
             layout           = "dwindle",
@@ -104,9 +100,6 @@
               font_size         = 16,
               font_weight_active = "ultraheavy",
               height            = 24,
-              col = {
-                locked_active = "0xfff38ba8",
-              },
             },
           },
           decoration = {
@@ -118,7 +111,6 @@
               enabled      = true,
               range        = 4,
               render_power = 3,
-              color        = "rgba(1a1a1aee)",
             },
             blur = {
               enabled  = true,
