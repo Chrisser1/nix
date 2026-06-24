@@ -1,7 +1,4 @@
-{self, ...}: {
-  # Shared home-manager import bundles per user.
-  # Hosts add these on top of their host-specific *-home module.
-
+{ self, ... }: {
   flake.homeModules.profile-chris = {...}: {
     imports = [
       # For easy connection to servers

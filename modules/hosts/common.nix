@@ -7,6 +7,7 @@
     imports = [
       self.nixosModules.base-system
       self.nixosModules.tailscale
+      self.nixosModules.bluetooth
       self.nixosModules.desktop
       self.nixosModules.users
       self.nixosModules.docker
@@ -14,7 +15,6 @@
 
       # System requirements for packages
       self.nixosModules.hyprland
-      self.nixosModules.niri
       self.nixosModules.noctalia
       self.nixosModules.core-packages
       self.nixosModules.vesktop
@@ -24,11 +24,9 @@
       self.nixosModules.cli
 
       # External flake modules
-      inputs.nvf.nixosModules.default
       inputs.home-manager.nixosModules.home-manager
+      self.nixosModules.vscode
     ];
-
-    nixpkgs.overlays = [inputs.nix-vscode-extensions.overlays.default];
 
     home-manager = {
       useUserPackages = true;

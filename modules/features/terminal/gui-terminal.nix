@@ -1,4 +1,4 @@
-{self, ...}: {
+{ self, ... }: {
   flake.homeModules.gui-terminal = {pkgs, ...}: {
     programs.kitty = {
       enable = true;

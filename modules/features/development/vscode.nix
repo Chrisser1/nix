@@ -1,4 +1,8 @@
-{self, ...}: {
+{inputs, ...}: {
+  flake.nixosModules.vscode = {...}: {
+    nixpkgs.overlays = [inputs.nix-vscode-extensions.overlays.default];
+  };
+
   flake.homeModules.vscode = {
     pkgs,
     config,
