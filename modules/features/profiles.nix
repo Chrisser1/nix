@@ -1,0 +1,68 @@
+{self, ...}: {
+  # Shared home-manager import bundles per user.
+  # Hosts add these on top of their host-specific *-home module.
+
+  flake.homeModules.profile-chris = {...}: {
+    imports = [
+      # For easy connection to servers
+      self.homeModules.ssh
+
+      # Window manager and related packages
+      self.homeModules.hyprland
+      self.homeModules.noctalia
+
+      # Terminal
+      self.homeModules.cli
+      self.homeModules.gui-terminal
+      self.homeModules.shell-aliases
+
+      # Kubernetes client connection to server
+      self.homeModules.kubernetes-client
+
+      # Everyday use
+      self.homeModules.firefox
+      self.homeModules.starship
+      self.homeModules.git
+      self.homeModules.nautilus
+      self.homeModules.clipboard
+      self.homeModules.appearance
+      self.homeModules.development
+      self.homeModules.search
+      self.homeModules.vscode
+      self.homeModules.wdisplays
+
+      # AI tools
+      self.homeModules.claude-code
+    ];
+  };
+
+  flake.homeModules.profile-work = {...}: {
+    imports = [
+      # Window manager and related packages
+      self.homeModules.hyprland
+      self.homeModules.noctalia
+
+      # Terminal
+      self.homeModules.cli
+      self.homeModules.gui-terminal
+      self.homeModules.shell-aliases
+
+      # Everyday use
+      self.homeModules.firefox
+      self.homeModules.starship
+      self.homeModules.git
+      self.homeModules.nautilus
+      self.homeModules.clipboard
+      self.homeModules.appearance
+      self.homeModules.development
+      self.homeModules.search
+      self.homeModules.vscode
+      self.homeModules.wdisplays
+
+      self.homeModules.work-mounts
+
+      # AI tools
+      self.homeModules.claude-code
+    ];
+  };
+}

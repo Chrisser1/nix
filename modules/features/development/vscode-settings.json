@@ -1,0 +1,47 @@
+{
+  "extensions.autoCheckUpdates": false,
+  "disable-hardware-acceleration": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "update.mode": "none",
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
+  "terminal.integrated.inheritEnv": false,
+  "git.enableSmartCommit": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
+
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=%OUTDIR%",
+        "-shell-escape",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-shell-escape",
+        "%DOC%"
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk 🔃",
+      "tools": ["latexmk"]
+    }
+  ]
+}
