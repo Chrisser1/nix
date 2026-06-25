@@ -16,7 +16,7 @@ order = [ "Chrisser" ]
         fill = "surface_variant"
         foreground = "primary"
         id = "g1"
-        members = [ "volume", "battery", "brightness", "bluetooth", "wallpaper" ]
+        members = [ "volume", "battery", "brightness", "bluetooth", "wallpaper", "mpvpaper_2" ]
         opacity = 1.0
         padding = 6.0
 
@@ -105,11 +105,24 @@ widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-login-box@HDMI-A-2" ]
         input_radius = 6.0
         show_login_button = true
 
+[plugin_settings."noctalia/mpvpaper"]
+video_directory = "@FLAKE@/assets/backgrounds/animated"
+
 [plugins]
-enabled = [ "noctalia/translator" ]
+enabled = [ "noctalia/translator", "noctalia/mpvpaper" ]
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/official-plugins"
+    name = "official"
+
+    [[plugins.source]]
+    kind = "git"
+    location = "https://github.com/noctalia-dev/community-plugins"
+    name = "community"
 
 [theme]
-builtin = "Ayu"
+builtin = "Eldritch"
 community_palette = "Monochrome"
 mode = "dark"
 source = "builtin"
@@ -129,21 +142,27 @@ transition_on_startup = true
     enabled = true
 
     [wallpaper.default]
-    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
 
     [wallpaper.last]
-    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
 
     [wallpaper.monitors.DP-4]
-    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
 
     [wallpaper.monitors.HDMI-A-2]
-    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
 
 [widget.media]
 capsule = true
 hide_when_no_media = true
 title_scroll = "on_hover"
+
+[widget.mpvpaper]
+type = "noctalia/mpvpaper:mpvpaper"
+
+[widget.mpvpaper_2]
+type = "noctalia/mpvpaper:mpvpaper"
 
 [widget.workspaces]
 capsule = true

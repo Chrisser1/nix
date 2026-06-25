@@ -1,5 +1,5 @@
 { self, inputs, ... }: {
-  flake.nixosModules.desktop-host = {...}: {
+  flake.nixosModules.desktop-host = { ... }: {
     imports = [
       self.nixosModules.base-system
       self.nixosModules.tailscale

@@ -44,7 +44,10 @@
         (builtins.readFile "${self}/assets/noctalia-config.toml");
     };
 
-    home.packages = [noctaliaHyprExtra];
+    home.packages = with pkgs; [
+      noctaliaHyprExtra
+      mpvpaper
+    ];
 
     systemd.user.services.noctalia-hypr-extra = {
       Unit.Description = "Update Hyprland extra colors from Noctalia palette";

@@ -1,5 +1,5 @@
 { self, ... }: {
-  flake.homeModules.profile-chris = {...}: {
+  flake.homeModules.profile-chris = { ... }: {
     imports = [
       # For easy connection to servers
       self.homeModules.ssh
@@ -26,13 +26,14 @@
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
+      self.homeModules.gromit-mpx
 
       # AI tools
       self.homeModules.claude-code
     ];
   };
 
-  flake.homeModules.profile-work = {...}: {
+  flake.homeModules.profile-work = { ... }: {
     imports = [
       # Window manager and related packages
       self.homeModules.hyprland
@@ -53,6 +54,7 @@
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
+      self.homeModules.gromit-mpx
 
       self.homeModules.work-mounts
 

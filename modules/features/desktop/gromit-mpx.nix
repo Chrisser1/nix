@@ -1,20 +1,29 @@
-{ self, ... }: {
-  flake.homeModules.gromit-mpx = { pkgs, lib, ... }: {
+{self, ...}: {
+  flake.homeModules.gromit-mpx = {
+    pkgs,
+    lib,
+    ...
+  }: {
     home.packages = [pkgs.gromit-mpx];
 
     home.file.".config/gromit-mpx.cfg".text = ''
-      "default"         = PEN (size=5 red=1.0 green=0.0 blue=0.0);
-      "default" SHIFT   = PEN (size=5 red=0.0 green=0.0 blue=1.0);
-      "default" ALT     = LINE (size=3 red=1.0 green=0.0 blue=0.0 arrowsize=1);
-      "default" CONTROL = ERASER (size=50);
+      "red pen"    = PEN (size=5 color="red");
+      "blue pen"   = PEN (size=5 color="blue");
+      "green pen"  = PEN (size=5 color="green");
+      "red arrow"  = LINE (size=3 color="red" arrowsize=1);
+      "eraser"     = ERASER (size=50);
+
+      "default"           = "red pen";
+      "default"[SHIFT]    = "blue pen";
+      "default"[ALT]      = "red arrow";
+      "default"[CONTROL]  = "eraser";
     '';
 
     wayland.windowManager.hyprland.extraConfig = lib.mkAfter ''
-      hl.on("hyprland.start", function()
-        hl.exec_cmd("gromit-mpx -d")
-      end)
-
-      hl.bind(mod .. " + D", hl.dsp.exec_cmd("gromit-mpx -t"))
+      hl.bind(mod .. " + D",      hl.dsp.exec_cmd("gromit-mpx -a"))
+      hl.bind(mod .. " + Z",      hl.dsp.exec_cmd("gromit-mpx -z"))
+      hl.bind(mod .. " + Y",      hl.dsp.exec_cmd("gromit-mpx -y"))
+      hl.bind(mod .. " + Delete", hl.dsp.exec_cmd("gromit-mpx -c"))
     '';
   };
 }
