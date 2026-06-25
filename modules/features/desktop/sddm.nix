@@ -1,5 +1,9 @@
-{ self, inputs, ... }: {
-  flake.nixosModules.sddm = { pkgs, ... }: {
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.sddm = {pkgs, ...}: {
     imports = [inputs.qylock.nixosModules.default];
 
     services.xserver.enable = true;
@@ -10,6 +14,12 @@
         wayland.enable = true;
         autoNumlock = true;
         enableHidpi = true;
+        package = pkgs.kdePackages.sddm;
+        extraPackages = with pkgs; [
+          kdePackages.qtsvg
+          kdePackages.qtvirtualkeyboard
+          kdePackages.qtmultimedia
+        ];
       };
 
       defaultSession = "hyprland";
@@ -17,7 +27,7 @@
 
     programs.qylock = {
       enable = true;
-      theme = "pixel-night-city";
+      theme = "pixel-sakura";
     };
   };
 }
