@@ -47,6 +47,13 @@ order = [ "Chrisser" ]
         opacity = 1.0
         padding = 6.0
 
+[calendar]
+enabled = true
+
+    [calendar.account.personal_google_calendar]
+    color = "primary"
+    type = "google"
+
 [desktop_widgets]
 schema_version = 2
 widget_order = []
@@ -142,16 +149,16 @@ transition_on_startup = true
     enabled = true
 
     [wallpaper.default]
-    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
+    path = "@FLAKE@/assets/backgrounds/berserk/Armor.jpg"
 
     [wallpaper.last]
-    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
+    path = "@FLAKE@/assets/backgrounds/berserk/Armor.jpg"
 
     [wallpaper.monitors.DP-4]
-    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
+    path = "@FLAKE@/assets/backgrounds/berserk/Armor.jpg"
 
     [wallpaper.monitors.HDMI-A-2]
-    path = "@FLAKE@/assets/backgrounds/berserk/Knight.png"
+    path = "@FLAKE@/assets/backgrounds/berserk/Armor.jpg"
 
 [widget.media]
 capsule = true
