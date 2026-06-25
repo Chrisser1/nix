@@ -1,10 +1,6 @@
-{
-  self,
-  inputs,
-  ...
-}: {
-  flake.nixosModules.sddm = {pkgs, ...}: {
-    imports = [inputs.qylock.nixosModules.default];
+{ self, inputs, ... }: {
+  flake.nixosModules.sddm = { pkgs, ... }: {
+    imports = [ inputs.qylock.nixosModules.default ];
 
     services.xserver.enable = true;
 
@@ -14,11 +10,14 @@
         wayland.enable = true;
         autoNumlock = true;
         enableHidpi = true;
+        
         package = pkgs.kdePackages.sddm;
-        extraPackages = with pkgs; [
-          kdePackages.qtsvg
-          kdePackages.qtvirtualkeyboard
-          kdePackages.qtmultimedia
+        
+        extraPackages = with pkgs.kdePackages; [
+          qtdeclarative   
+          qt5compat        
+          qtsvg           
+          qtmultimedia    
         ];
       };
 
@@ -28,6 +27,6 @@
     programs.qylock = {
       enable = true;
       theme = "pixel-sakura";
-    };
+    }; 
   };
 }
