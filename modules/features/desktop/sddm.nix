@@ -1,5 +1,5 @@
 { self, inputs, ... }: {
-  flake.nixosModules.sddm = {pkgs, ...}: {
+  flake.nixosModules.sddm = { pkgs, ... }: {
     imports = [inputs.qylock.nixosModules.default];
 
     services.xserver.enable = true;

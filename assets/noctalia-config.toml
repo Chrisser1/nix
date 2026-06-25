@@ -122,23 +122,23 @@ wallpaper_scheme = "m3-content"
     enable_community_templates = true
 
 [wallpaper]
-directory = "/home/chris/nixos/assets/backgrounds/berserk"
+directory = "@FLAKE@/assets/backgrounds/berserk"
 transition_on_startup = true
 
     [wallpaper.automation]
     enabled = true
 
     [wallpaper.default]
-    path = "/home/chris/nixos/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
 
     [wallpaper.last]
-    path = "/home/chris/nixos/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
 
     [wallpaper.monitors.DP-4]
-    path = "/home/chris/nixos/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
 
     [wallpaper.monitors.HDMI-A-2]
-    path = "/home/chris/nixos/assets/backgrounds/berserk/Farm.jpg"
+    path = "@FLAKE@/assets/backgrounds/berserk/Farm.jpg"
 
 [widget.media]
 capsule = true
