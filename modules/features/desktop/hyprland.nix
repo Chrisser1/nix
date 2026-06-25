@@ -194,8 +194,8 @@
         hl.bind(mod .. " + SHIFT +M",   hl.dsp.exec_cmd("hypr-mirror-toggle"))
 
         hl.bind(mod .. " + G",           hl.dsp.group.toggle())
-        hl.bind(mod .. " + Tab",         hl.dsp.group.active({ index = "+1" }))
-        hl.bind(mod .. " + SHIFT + Tab", hl.dsp.group.active({ index = "-1" }))
+        hl.bind(mod .. " + Tab",         hl.dsp.group.next())
+        hl.bind(mod .. " + SHIFT + Tab", hl.dsp.group.prev())
         hl.bind(mod .. " + F",           hl.dsp.window.move({ out_of_group = true }))
 
         hl.bind(mod .. " + left",  hl.dsp.focus({ direction = "left" }))
