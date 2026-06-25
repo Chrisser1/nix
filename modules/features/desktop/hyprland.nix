@@ -172,7 +172,7 @@
           no_blur = true,
         })
 
-        hl.bind(mod .. " + S",         hl.dsp.exec_cmd("${pkgs.firefox}/bin/firefox"))
+        hl.bind(mod .. " + S",         hl.dsp.exec_cmd("firefox-devedition"))
         hl.bind(mod .. " + SHIFT +C",   hl.dsp.window.close())
         hl.bind(mod .. " + Q",         hl.dsp.exec_cmd(terminal))
         hl.bind(mod .. " + Space",     hl.dsp.window.float({ action = "toggle" }))
@@ -186,7 +186,7 @@
         hl.bind("ALT + Space",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
         hl.bind(mod .. " + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 
-        hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("${pkgs.firefox}/bin/firefox https://github.com/Chrisser1"))
+        hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("firefox-devedition https://github.com/Chrisser1"))
         hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))

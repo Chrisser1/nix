@@ -24,6 +24,7 @@
       inputs.hyprland.follows = "hyprland";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    qylock.url = "github:Darkkal44/qylock";
   };
 
   outputs = inputs:
