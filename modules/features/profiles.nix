@@ -17,7 +17,6 @@
       self.homeModules.kubernetes-client
 
       # Everyday use
-      self.homeModules.firefox
       self.homeModules.starship
       self.homeModules.git
       self.homeModules.nautilus
@@ -45,7 +44,6 @@
       self.homeModules.shell-aliases
 
       # Everyday use
-      self.homeModules.firefox
       self.homeModules.starship
       self.homeModules.git
       self.homeModules.nautilus
