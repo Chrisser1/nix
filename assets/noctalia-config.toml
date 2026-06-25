@@ -142,7 +142,7 @@ wallpaper_scheme = "m3-content"
     enable_community_templates = true
 
 [wallpaper]
-directory = "@FLAKE@/assets/backgrounds/berserk"
+directory = "@FLAKE@/assets/backgrounds/normal"
 transition_on_startup = true
 
     [wallpaper.automation]
