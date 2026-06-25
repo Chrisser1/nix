@@ -187,8 +187,7 @@
         hl.bind(mod .. " + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
 
         hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("${pkgs.firefox}/bin/firefox https://github.com/Chrisser1"))
-        hl.bind(mod .. " + L",         hl.dsp.exec_cmd("${pkgs.firefox}/bin/firefox https://learn.inside.dtu.dk/d2l/home"))
-        hl.bind(mod .. " + SHIFT +L",   hl.dsp.exec_cmd("${pkgs.firefox}/bin/firefox https://studieplan.dtu.dk/"))
+        hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))
         hl.bind(mod .. " + SHIFT +M",   hl.dsp.exec_cmd("hypr-mirror-toggle"))
