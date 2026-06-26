@@ -1,5 +1,13 @@
-{ self, inputs, ... }: {
-  flake.nixosModules.hyprland = { pkgs, lib, ... }: {
+{
+  self,
+  inputs,
+  ...
+}: {
+  flake.nixosModules.hyprland = {
+    pkgs,
+    lib,
+    ...
+  }: {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     programs.hyprland = {
@@ -217,7 +225,7 @@
 
         for i = 1, 9 do
           hl.bind(mod .. " + " .. i,         smw.workspace(tostring(i)))
-          hl.bind(mod .. " + SHIFT + " .. i, smw.move_to_workspace_silent(tostring(i)))
+          hl.bind(mod .. " + SHIFT + " .. i, smw.move_to_workspace(tostring(i)))
         end
       '';
     };
