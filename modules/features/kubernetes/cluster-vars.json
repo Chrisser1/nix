@@ -1,8 +1,15 @@
 {
-  "controlPlaneIp": "158.180.42.198",
-  "controlPlaneTailscaleIp": "100.81.239.16",
-  "controlPlaneSshAlias": "oracle-server",
-  "controlPlaneSshUser": "root",
-  "controlPlaneSshKey": "~/.ssh/ssh-key-2025-11-12.key",
-  "kubernetesVersion": "v1.30.0+k3s1"
+  "kubernetesVersion": "v1.30.0+k3s1",
+  "servers": [
+    {
+      "name": "oracle",
+      "nixosAttr": "oracle",
+      "sshAlias": "oracle-server",
+      "ip": "158.180.42.198",
+      "tailscaleIp": "100.81.239.16",
+      "sshUser": "root",
+      "sshKey": "~/.ssh/ssh-key-2025-11-12.key",
+      "role": "control-plane"
+    }
+  ]
 }

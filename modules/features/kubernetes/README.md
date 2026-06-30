@@ -1,73 +1,140 @@
 # NixOS Kubernetes (K3s) Infrastructure
 
-This module manages the core Kubernetes infrastructure for our cloud environment. It uses K3s for lightweight container orchestration, Tailscale for a secure private mesh network, and ArgoCD for GitOps deployments.
+K3s for container orchestration, Tailscale for secure mesh networking, ArgoCD for GitOps deployments. Supports multiple servers defined in a single JSON file.
 
-## 📂 Architecture
+## Architecture
 
-* **`cluster-vars.json`**: The central "brain" of the cluster. Holds the Control Plane IPs, Tailscale IPs, and SSH aliases.
-* **`client.nix`**: Installs local CLI tools (`kubectl`, `k9s`) and the `fetch-kubeconfig` script. Apply this to your developer machine.
-* **`server.nix`**: Configures the Master Node (Control Plane). Binds internal traffic securely to Tailscale.
-* **`agent.nix`**: Configures Worker Nodes. Joins existing servers securely via the Tailscale VPN and cluster token.
-* **`deployments.nix`**: Bootstraps the core cluster infrastructure (Prometheus, ArgoCD) directly into the Master Node.
-
-
-## 🛠️ Operating Procedures
-
-### 1. Setting up a new Developer Machine (Client)
-1. Add the `kubernetes-client` module to your local NixOS/Home-Manager config.
-2. Run `rebuild` (or your equivalent rebuild command).
-3. Run the custom command: `fetch-kubeconfig`.
-4. Type `k9s` to access the cluster dashboard.
-
-### 2. Setting up a new Server (Control Plane)
-1. Add the `kubernetes-server` and `kubernetes-deployments` modules to the target server's Nix config.
-2. Ensure the Cloud provider's hardware firewall has ports `80`, `443`, and `6443` open.
-3. Deploy the configuration. The server will boot, start K3s on the Tailscale interface, and install ArgoCD.
-
-### 3. Adding a new Worker Node (Agent)
-Agents do not run the Kubernetes API; they only run application Pods. We use Tailscale to create a secure Hybrid Cloud so nodes can be anywhere in the world.
-
-**Step A: Connect to Tailscale**
-Log the new machine into Tailscale using the same identity (or profile) as the Control Plane:
-```bash
-sudo tailscale up
-```
-
-**Step B: Secure the Cluster Token**
-Pull the secret token from the Master Node and save it locally on the new Agent:
-
-```bash
-sudo mkdir -p /var/lib/rancher/k3s/
-ssh oracle-server "sudo cat /var/lib/rancher/k3s/server/node-token" | sudo tee /var/lib/rancher/k3s/cluster-token > /dev/null
-sudo chmod 600 /var/lib/rancher/k3s/cluster-token
-```
-
-**Step C: Deploy & Verify**
-Add `self.nixosModules.kubernetes-agent` to the new node's Nix configuration and run `rebuild`. Open `k9s` on your client and type `:nodes` to confirm the new machine has joined.
+| File | Purpose |
+|------|---------|
+| `cluster-vars.json` | Single source of truth for all servers (IPs, SSH aliases, roles) |
+| `ssh.nix` | Generates SSH client config entries for every server in the list |
+| `client.nix` | CLI tools + scripts for developer machines (`kubectl`, `k9s`, `fetch-kubeconfig`, `bootstrap-node`) |
+| `server.nix` | K3s control plane config, apply to the server with `"role": "control-plane"` |
+| `agent.nix` | K3s worker node config, joins the control plane via Tailscale |
+| `deployments.nix` | Core cluster infrastructure (Prometheus, ArgoCD) bootstrapped onto the control plane |
 
 ---
 
-### 4. Moving the Main Server (Stateful Migration)
+## Adding a New Server
 
-If you are upgrading to a new server or moving away from Oracle, follow this to preserve your data and GitOps state.
+All server configuration lives in `cluster-vars.json`. Append an entry to the `servers` array:
 
-**Step A: Extract the Database (Backup)**
-Run this from your laptop to pull the data from the live pod:
+```json
+{
+  "name": "my-server",
+  "nixosAttr": "my-server",
+  "sshAlias": "my-server",
+  "ip": "1.2.3.4",
+  "tailscaleIp": "100.x.x.x",
+  "sshUser": "root",
+  "sshKey": "~/.ssh/your-key.key",
+  "role": "agent"
+}
+```
 
-```bash
+| Field | Description |
+|-------|-------------|
+| `name` | Used as suffix for shell aliases (`rebuild-<name>`, `update-<name>`, `clean-<name>`) |
+| `nixosAttr` | The `nixosConfigurations.<attr>` key in the flake |
+| `sshAlias` | The SSH `Host` entry written to `~/.ssh/config` |
+| `ip` | Public IP, used for TLS SANs and kubeconfig patching |
+| `tailscaleIp` | Tailscale IP, K3s binds cluster traffic to this |
+| `sshKey` | Path to the private key on your local machine |
+| `role` | `"control-plane"` or `"agent"`, scripts use this to find the right server automatically |
+
+After editing, run `rebuild` on your local machine to apply the new SSH config and generate the new aliases.
+
+---
+
+## Bootstrapping a New NixOS Server (First Deploy)
+
+`nixos-rebuild --build-host` requires the server's hostname to match a `nixosConfigurations` entry in the flake. A freshly provisioned server often has a different hostname, so the first deploy must be done manually.
+
+**Step 1 — Add the server to `cluster-vars.json`** and create its `nixosConfigurations` entry in the flake. Add its SSH public key to `secrets.nix`.
+
+**Step 2 — Copy the flake to the server:**
+```sh
+rsync -avz ~/nixos/ <ssh-alias>:/tmp/nixos/
+```
+
+**Step 3 — Copy `secrets.nix`** (referenced by absolute path, not included in the flake source):
+```sh
+command ssh <ssh-alias> 'mkdir -p /home/chris/nixos'
+rsync ~/nixos/secrets.nix <ssh-alias>:/home/chris/nixos/secrets.nix
+```
+
+**Step 4 — Fix ownership and rebuild on the server natively:**
+```sh
+command ssh <ssh-alias> 'chown -R root:root /tmp/nixos && nixos-rebuild switch --flake /tmp/nixos#<nixosAttr> --impure'
+```
+
+> Use `command ssh` instead of `ssh` — the `ssh` alias points to `kitten ssh` which requires a TTY and fails for non-interactive commands.
+
+**Step 5 — Fix the running hostname** (NixOS sets `/etc/hostname` but the kernel hostname may not update until reboot on some cloud providers):
+```sh
+command ssh <ssh-alias> 'hostname <nixosAttr>'
+```
+
+**Step 6 — All future deploys work normally:**
+```sh
+rebuild-<name>   # rebuild with current flake lock
+update-<name>    # update flake inputs, then rebuild
+clean-<name>     # run nix garbage collection on the server
+```
+
+---
+
+## Setting Up a Developer Machine
+
+1. Add `self.homeModules.kubernetes-client` to your home-manager profile.
+2. Run `rebuild`.
+3. Run `fetch-kubeconfig` to pull the kubeconfig from the control plane.
+4. Run `k9s` to connect to the cluster.
+
+`fetch-kubeconfig` defaults to the control plane server. To target a specific server:
+```sh
+fetch-kubeconfig <ssh-alias>
+```
+
+---
+
+## Adding a Worker Node (Agent)
+
+**Step 1 — Add the node to `cluster-vars.json`** with `"role": "agent"`, create its NixOS config importing `self.nixosModules.kubernetes-agent`, and bootstrap it following the steps above.
+
+**Step 2 — Connect to Tailscale:**
+```sh
+command ssh <ssh-alias> 'tailscale up'
+```
+
+**Step 3 — Inject the cluster token from your local machine:**
+```sh
+bootstrap-node <new-server-ip> <ssh-user>
+```
+
+This pulls the token from the control plane and writes it securely to the new node.
+
+**Step 4 — Verify in k9s:**
+```sh
+k9s
+# type :nodes
+```
+
+---
+
+## Moving the Control Plane
+
+**Step 1 — Back up the database:**
+```sh
 kubectl exec -it -n gymbros deployment/gymbros-db -- pg_dump -U admin -d gymbros -F c > gymbros_migration_backup.dump
 ```
 
-**Step B: The Brain Transplant**
-Update `cluster-vars.json` with the new server's Public IP, Tailscale IP, and SSH alias. Deploy `server.nix` and `deployments.nix` to the new machine.
+**Step 2 — Update `cluster-vars.json`** with the new server's IPs and SSH alias. Bootstrap the new server, applying `kubernetes-server` and `kubernetes-deployments`.
 
-**Step C: Restore GitOps**
-Log into the new ArgoCD UI and re-apply your infrastructure repository bridge file. ArgoCD will instantly rebuild all your application pods (Database, Backend, Frontend).
+**Step 3 — Restore GitOps:** Re-sync ArgoCD on the new server. ArgoCD rebuilds all application pods from the Git state.
 
-**Step D: Inject the Data (Restore)**
-Push the saved database backup into the new, empty database pod:
-
-```bash
+**Step 4 — Restore the database:**
+```sh
 kubectl exec -i -n gymbros deployment/gymbros-db -- pg_restore -U admin -d gymbros -1 < gymbros_migration_backup.dump
 kubectl rollout restart deployment gymbros-backend -n gymbros
 ```
