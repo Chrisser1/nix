@@ -77,7 +77,7 @@ command ssh <ssh-alias> 'hostname <nixosAttr>'
 
 **Step 6 — All future deploys work normally:**
 ```sh
-rebuild-<name>   # rebuild with current flake lock
+rebuild-<name>    # rebuild with current flake lock
 update-<name>    # update flake inputs, then rebuild
 clean-<name>     # run nix garbage collection on the server
 ```

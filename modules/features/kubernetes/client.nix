@@ -1,5 +1,4 @@
-{ self, ... }: 
-let
+{ self, ... }: let
   vars = builtins.fromJSON (builtins.readFile ./cluster-vars.json);
   controlPlane = builtins.head (builtins.filter (s: s.role == "control-plane") vars.servers);
   serverCases = builtins.concatStringsSep "\n" (map (
@@ -10,11 +9,11 @@ let
   serverAliases = builtins.listToAttrs (builtins.concatLists (map (server: [
       {
         name = "rebuild-${server.name}";
-        value = "nixos-rebuild switch --flake $FLAKE#${server.nixosAttr} --target-host ${server.sshAlias} --build-host ${server.sshAlias} --impure";
+        value = "nixos-rebuild switch --flake $NH_FLAKE#${server.nixosAttr} --target-host ${server.sshAlias} --build-host ${server.sshAlias} --impure";
       }
       {
         name = "update-${server.name}";
-        value = "nix flake update $FLAKE && nixos-rebuild switch --flake $FLAKE#${server.nixosAttr} --target-host ${server.sshAlias} --build-host ${server.sshAlias} --impure";
+        value = "nix flake update $NH_FLAKE && nixos-rebuild switch --flake $NH_FLAKE#${server.nixosAttr} --target-host ${server.sshAlias} --build-host ${server.sshAlias} --impure";
       }
       {
         name = "clean-${server.name}";

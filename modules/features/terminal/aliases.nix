@@ -1,6 +1,6 @@
 { self, ... }: {
   flake.homeModules.shell-aliases = { config, pkgs, ... }: {
-    home.sessionVariables.FLAKE = "${config.home.homeDirectory}/nixos";
+    home.sessionVariables.NH_FLAKE = "${config.home.homeDirectory}/nixos";
 
     programs.fish.shellAliases = {
       vim = "nvim";
