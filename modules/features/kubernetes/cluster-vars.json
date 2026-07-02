@@ -6,6 +6,7 @@
       "nixosAttr": "oracle",
       "sshAlias": "oracle-server",
       "ip": "158.180.42.198",
+      "vcnIp": "10.0.0.93",
       "tailscaleIp": "100.81.239.16",
       "sshUser": "root",
       "sshKey": "~/.ssh/ssh-key-2025-11-12.key",

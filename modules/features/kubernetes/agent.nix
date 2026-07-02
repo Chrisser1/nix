@@ -13,6 +13,13 @@ in {
       ];
     };
 
+    environment.etc."rancher/k3s/registries.yaml".text = ''
+      mirrors:
+        "${controlPlane.tailscaleIp}:30500":
+          endpoint:
+            - "http://${controlPlane.tailscaleIp}:30500"
+    '';
+
     networking.firewall.allowedTCPPorts = [10250];
     networking.firewall.allowedUDPPorts = [8472];
 
