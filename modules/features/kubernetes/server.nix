@@ -1,13 +1,15 @@
-{ self, ... }: let
+{ self, ... }: 
+let
   vars = builtins.fromJSON (builtins.readFile ./cluster-vars.json);
   controlPlane = builtins.head (builtins.filter (s: s.role == "control-plane") vars.servers);
 in {
-  flake.nixosModules.kubernetes-server = { pkgs, secrets, ... }: {
+  flake.nixosModules.kubernetes-server = { pkgs, secrets, config, ... }: {
     services.k3s = {
       enable = true;
       role = "server";
       extraFlags = toString [
         "--disable=traefik"
+        "--disable=local-storage"
         "--tls-san ${controlPlane.ip}"
         "--tls-san ${controlPlane.tailscaleIp}"
         "--node-ip ${controlPlane.tailscaleIp}"
@@ -54,11 +56,29 @@ in {
     };
     users.groups."github-runner-gymbros" = {};
 
-    networking.firewall.allowedTCPPorts = [80 443 6443 10250 30500];
+    services.openiscsi = {
+      enable = true;
+      name = "iqn.2023-01.io.longhorn:${config.networking.hostName}";
+    };
+
+    # Longhorn nsenters into the host and expects iscsiadm on an FHS path
+    systemd.tmpfiles.rules = [
+      "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
+    ];
+
+    networking.firewall.allowedTCPPorts = [80 443 6443 10250 30500 3260];
+    networking.firewall.allowedTCPPortRanges = [
+      {
+        from = 9500;
+        to = 9520;
+      }
+    ];
     networking.firewall.allowedUDPPorts = [8472];
 
     environment.systemPackages = with pkgs; [
       k3s
+      nfs-utils
+      openiscsi
     ];
   };
 }
