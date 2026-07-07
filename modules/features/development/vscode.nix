@@ -89,6 +89,14 @@
               pkgs.vscode-extensions.vadimcn.vscode-lldb
             ];
         };
+
+        Zig = {
+          extensions =
+            commonExtensions
+            ++ (with marketplace; [
+              ziglang.vscode-zig
+            ]);
+        };
       };
     };
 
@@ -127,6 +135,7 @@
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Python"
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Cpp"
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Rust"
+      bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Zig"
     '';
   };
 }

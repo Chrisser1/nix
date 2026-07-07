@@ -11,6 +11,10 @@
   "github.copilot.nextEditSuggestions.enabled": true,
   "python.condaPath": "micromamba",
 
+  "zig.path": "zig",
+  "zig.zls.path": "zls",
+  "zig.checkForUpdate": false,
+
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
