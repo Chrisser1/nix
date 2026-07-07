@@ -12,3 +12,22 @@ Comfortable with Nix/NixOS but still mapping out the structure of this specific 
 - Propose a plan (which files you'll touch, what you'll change) before making edits
 - When restructuring modules or changing option paths, call out tradeoffs
 - Before using any Hyprland config option, tool, or NixOS module option, check the current docs/wiki for the correct up-to-date syntax — APIs change frequently and outdated options cause config errors
+
+## Code style
+
+Format Nix modules like this — spaces inside arg braces, argument sets on one line (not one-per-line), `let` on its own line after `=`:
+
+```nix
+{ inputs, ... }: {
+  ...
+}
+```
+
+```nix
+flake.homeModules.name = { pkgs, lib, ... }: 
+let
+  ...
+in {
+  ...
+}
+```

@@ -1,7 +1,8 @@
 { inputs, ... }: {
-  flake.homeModules.snappy-switcher = { pkgs, lib, ... }: 
+  flake.homeModules.snappy-switcher = { pkgs, lib, config, options, ... }: 
   let
     snappy = inputs.snappy-switcher.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    hypr = config.wayland.windowManager.hyprland;
   in {
     home.packages = [snappy];
 
@@ -21,7 +22,6 @@
     '';
 
     # Rendered by Noctalia into ~/.config/snappy-switcher/themes/noctalia.ini
-    # (registered under [theme.templates.user.snappy-switcher] in assets/noctalia-config.toml)
     xdg.configFile."noctalia/templates/snappy-switcher.ini".text = ''
       [colors]
       background = {{colors.surface.default.hex}}ee
@@ -37,8 +37,30 @@
       badge_text_color_selected = {{colors.on_primary.default.hex}}ff
     '';
 
-    # The daemon reads config + theme once at startup; Noctalia's post_hook
-    # restarts this service whenever the palette changes.
+    # The daemon reads config + theme once at startup with no reload IPC,
+    # so the post_hook restarts it whenever the palette changes. Only
+    # registered when the noctalia home module is imported by the consumer.
+    programs = lib.optionalAttrs (options.programs ? noctalia) {
+      noctalia.settings.theme.templates.user.snappy-switcher = {
+        enabled = true;
+        input_path = "~/.config/noctalia/templates/snappy-switcher.ini";
+        output_path = "~/.config/snappy-switcher/themes/noctalia.ini";
+        post_hook = "systemctl --user restart snappy-switcher.service";
+      };
+    };
+
+    wayland.windowManager.hyprland.extraConfig = lib.mkIf hypr.enable (lib.mkAfter (
+      if (hypr.configType or "conf") == "lua"
+      then ''
+        hl.bind("ALT + Tab",           hl.dsp.exec_cmd("snappy-switcher next --mod alt"))
+        hl.bind("ALT + SHIFT + Tab",   hl.dsp.exec_cmd("snappy-switcher prev --mod alt"))
+      ''
+      else ''
+        bind = ALT, Tab, exec, snappy-switcher next --mod alt
+        bind = ALT SHIFT, Tab, exec, snappy-switcher prev --mod alt
+      ''
+    ));
+
     systemd.user.services.snappy-switcher = {
       Unit = {
         Description = "Snappy Switcher window switcher daemon";

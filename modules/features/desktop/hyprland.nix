@@ -1,4 +1,4 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }: { 
   flake.nixosModules.hyprland = { pkgs, lib, ... }: {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -187,9 +187,6 @@
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))
         hl.bind(mod .. " + SHIFT +M",   hl.dsp.exec_cmd("hypr-mirror-toggle"))
-
-        hl.bind("ALT + Tab",           hl.dsp.exec_cmd("snappy-switcher next --mod alt"))
-        hl.bind("ALT + SHIFT + Tab",   hl.dsp.exec_cmd("snappy-switcher prev --mod alt"))
 
         hl.bind(mod .. " + G",           hl.dsp.group.toggle())
         hl.bind(mod .. " + Tab",         hl.dsp.group.next())
