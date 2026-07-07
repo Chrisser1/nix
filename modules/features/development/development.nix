@@ -6,19 +6,16 @@
     home.packages = with pkgs; [
       # Databases
       dbeaver-bin
-      jetbrains.datagrip
-      
+
       # Go
       go
       gcc
-      gopls   
-      delve   
-      # jetbrains.goland
-      
+      gopls
+      delve
+
       # Java
       jdk25
-      jetbrains.idea
-      
+
       # Node & Python
       nodejs_24
       pnpm
