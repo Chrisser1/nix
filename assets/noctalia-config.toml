@@ -141,6 +141,12 @@ wallpaper_scheme = "m3-content"
     enable_builtin_templates = true
     enable_community_templates = true
 
+        [theme.templates.user.snappy-switcher]
+        enabled = true
+        input_path = "~/.config/noctalia/templates/snappy-switcher.ini"
+        output_path = "~/.config/snappy-switcher/themes/noctalia.ini"
+        post_hook = "systemctl --user restart snappy-switcher.service"
+
 [wallpaper]
 directory = "@FLAKE@/assets/backgrounds/normal"
 transition_on_startup = true

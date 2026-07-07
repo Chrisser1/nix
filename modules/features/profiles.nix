@@ -1,5 +1,5 @@
 { self, ... }: {
-  flake.homeModules.profile-chris = { ... }: {
+  flake.homeModules.profile-chris = {...}: {
     imports = [
       # For easy connection to servers
       self.homeModules.ssh
@@ -7,6 +7,7 @@
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
+      self.homeModules.snappy-switcher
 
       # Terminal
       self.homeModules.cli
@@ -33,11 +34,12 @@
     ];
   };
 
-  flake.homeModules.profile-work = { ... }: {
+  flake.homeModules.profile-work = {...}: {
     imports = [
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
+      self.homeModules.snappy-switcher
 
       # Terminal
       self.homeModules.cli
