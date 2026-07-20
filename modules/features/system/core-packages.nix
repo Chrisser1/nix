@@ -37,7 +37,7 @@
       # --- Document Handling ---
       pandoc
       poppler-utils
-      texlive.combined.scheme-small
+      texliveSmall
       # ocrmypdf
       libreoffice-fresh
 

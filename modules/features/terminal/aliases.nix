@@ -4,8 +4,8 @@
 
     programs.fish.shellAliases = {
       vim = "nvim";
-      rebuild = "nh os switch -- --impure";
-      update = "nh os switch --update -- --impure";
+      rebuild = "nh os switch ${config.home.homeDirectory}/nixos -- --impure";
+      update = "nh os switch --update ${config.home.homeDirectory}/nixos -- --impure";
       clean = "nh clean all --keep 3 && rm -rf ~/.local/share/Trash/*";
       usage = "gdu /";
       store-map = "nix-tree -- /run/current-system";
