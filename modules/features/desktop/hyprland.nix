@@ -152,7 +152,11 @@
         hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 
         hl.on("hyprland.start", function()
-          hl.exec_cmd("noctalia --daemon")
+          -- Delay lets the compositor finish registering all outputs (DP-7, DP-8)
+          -- before noctalia's HotCorners init iterates over them; without this it
+          -- segfaults on multi-monitor setups where external displays are still
+          -- negotiating when hyprland.start fires.
+          hl.exec_cmd("bash -c 'sleep 2 && noctalia --daemon'")
         end)
 
         local _hypr_dir = (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")) .. "/hypr"
