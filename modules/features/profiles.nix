@@ -13,6 +13,7 @@
       self.homeModules.cli
       self.homeModules.gui-terminal
       self.homeModules.shell-aliases
+      self.homeModules.tmux
 
       # Kubernetes client connection to server
       self.homeModules.kubernetes-client
@@ -46,6 +47,7 @@
       self.homeModules.cli
       self.homeModules.gui-terminal
       self.homeModules.shell-aliases
+      self.homeModules.tmux
 
       # Everyday use
       self.homeModules.starship

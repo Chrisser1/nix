@@ -29,6 +29,8 @@
     };
     claude-code.url = "github:sadjow/claude-code-nix";
     qylock.url = "github:Darkkal44/qylock";
+  
+    grubermeister.url = "github:N1njaflam1ng0/grubermeister";
   };
 
   outputs = inputs:

@@ -3,7 +3,6 @@
     environment.systemPackages = with pkgs; [
       # --- System Utilities ---
       fastfetch
-      tmux
       wget
       zip
       unzip

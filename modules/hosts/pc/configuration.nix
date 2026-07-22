@@ -1,10 +1,5 @@
-{ self, ... }: {
-  flake.nixosModules.pc-configuration = {
-    config,
-    pkgs,
-    lib,
-    ...
-  }: {
+{ self, inputs, ... }: {
+  flake.nixosModules.pc-configuration = { config, pkgs, lib, ... }: {
     imports = [
       self.nixosModules.pc-hardware
     ];
@@ -50,9 +45,15 @@
     ];
 
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.grub.enable = true;
-    boot.loader.grub.devices = ["nodev"];
-    boot.loader.grub.efiSupport = true;
-    boot.loader.grub.useOSProber = true;
+    boot.loader.grub = {
+      enable = true;
+      devices = ["nodev"];
+      efiSupport = true;
+      useOSProber = true;
+      theme = "${inputs.grubermeister.packages.${pkgs.stdenv.hostPlatform.system}.default}";
+
+      entryOptions    = "--unrestricted --class nixos";
+      subEntryOptions = "--unrestricted --class nixos-generation";
+    };
   };
 }
