@@ -17,6 +17,10 @@
         bind -n M-Down confirm-before -p "Kill window? (y/n)" kill-window
         set -g status-left "#{?client_prefix,#[fg=black]#[bg=yellow]#[bold] PREFIX }"
 
+        set -g allow-passthrough on
+        set -s extended-keys on
+        set -as terminal-features 'xterm*:extkeys'
+
         # Split panes in the current path
         bind | split-window -h -c "#{pane_current_path}"
         bind - split-window -v -c "#{pane_current_path}"
