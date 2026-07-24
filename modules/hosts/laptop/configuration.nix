@@ -14,8 +14,10 @@
       devices = ["nodev"];
       efiSupport = true;
       useOSProber = true;
-      gfxmodeEfi = "1920x1080";
-      fontSize = 24;
+      theme = "${inputs.grubermeister.packages.${pkgs.stdenv.hostPlatform.system}.default}";
+
+      entryOptions    = "--unrestricted --class nixos";
+      subEntryOptions = "--unrestricted --class nixos-generation";
     };
   };
 }
