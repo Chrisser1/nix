@@ -31,6 +31,8 @@
     qylock.url = "github:Darkkal44/qylock";
   
     grubermeister.url = "github:N1njaflam1ng0/grubermeister";
+
+    k3s-cluster.url = "github:Clusterforgers/k3s-cluster";
   };
 
   outputs = inputs:

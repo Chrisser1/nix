@@ -12,7 +12,7 @@ Determine the right rebuild command based on $ARGUMENTS (or ask if ambiguous), t
 |-------|-------------|
 | `rebuild` | `nh os switch ~/nixos -- --impure` — local NixOS switch (laptop or pc) |
 | `update` | `nh os switch ~/nixos --update -- --impure` — update flake inputs first, then switch |
-| `rebuild-oracle` | `nixos-rebuild switch --flake ~/nixos#oracle --target-host oracle-server --build-host oracle-server --impure` — deploy to cloud server over SSH |
+| `rebuild-oracle` | `nixos-rebuild switch --flake github:Clusterforgers/servers#oracle --target-host oracle-server --build-host oracle-server --impure` — deploy to cloud server over Tailscale SSH |
 | `hms` | `home-manager switch --flake /home/chris/nixos#$(hostname)` — Home Manager only, no system changes |
 
 ## Logic
@@ -26,7 +26,7 @@ Determine the right rebuild command based on $ARGUMENTS (or ask if ambiguous), t
 
 - All commands require `--impure` because the config reads `cluster-vars.json` and `secrets.nix` via `builtins.readFile` at eval time
 - `nh` (nix-helper) must be installed; it provides the `rebuild` and `update` aliases
-- `rebuild-oracle` builds on the remote host itself — requires SSH access to `oracle-server` (Tailscale must be connected)
+- `rebuild-oracle` lives in the `Clusterforgers/k3s-cluster` flake (home-manager module `kubernetes-client`) and builds against the `Clusterforgers/servers` flake on the remote host itself — requires SSH access to `oracle-server` over Tailscale (port 2222, key-based auth; not Tailscale SSH, which doesn't support Nix's remote-store protocol)
 - If the build fails due to a broken module, offer to run `nix flake check ~/nixos -- --impure` first to identify the issue
 
 Run the command directly in the terminal after confirming with the user which target to rebuild.

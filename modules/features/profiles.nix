@@ -1,8 +1,10 @@
-{ self, ... }: {
+{ self, inputs, ... }: {
   flake.homeModules.profile-chris = {...}: {
+    home.sessionVariables.NIXOS_SECRETS_PATH = "/home/chris/nixos/secrets.nix";
+
     imports = [
       # For easy connection to servers
-      self.homeModules.ssh
+      inputs.k3s-cluster.homeModules.ssh
 
       # Window manager and related packages
       self.homeModules.hyprland
@@ -16,7 +18,7 @@
       self.homeModules.tmux
 
       # Kubernetes client connection to server
-      self.homeModules.kubernetes-client
+      inputs.k3s-cluster.homeModules.kubernetes-client
 
       # Everyday use
       self.homeModules.starship
