@@ -32,6 +32,9 @@
       self.homeModules.vscode
       self.homeModules.wdisplays
       self.homeModules.gromit-mpx
+      self.homeModules.bitwarden
+      self.homeModules.hypr-screen-mirror
+      self.homeModules.nix-monitor
 
       # AI tools
       self.homeModules.claude-code
@@ -63,6 +66,9 @@
       self.homeModules.vscode
       self.homeModules.wdisplays
       self.homeModules.gromit-mpx
+      self.homeModules.bitwarden
+      self.homeModules.hypr-screen-mirror
+      self.homeModules.nix-monitor
 
       self.homeModules.work-mounts
 

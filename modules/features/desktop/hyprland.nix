@@ -185,13 +185,10 @@
         hl.bind(mod .. " + T",         hl.dsp.exec_cmd("noctalia msg settings-toggle"))
         hl.bind(mod .. " + R",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
         hl.bind("ALT + Space",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
-        hl.bind(mod .. " + M",         hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
-
         hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("firefox-devedition https://github.com/Chrisser1"))
         hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))
-        hl.bind(mod .. " + SHIFT +M",   hl.dsp.exec_cmd("hypr-mirror-toggle"))
 
         hl.bind(mod .. " + G",           hl.dsp.group.toggle())
         hl.bind(mod .. " + Tab",         hl.dsp.group.next())
