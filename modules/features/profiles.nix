@@ -1,7 +1,5 @@
 { self, inputs, ... }: {
   flake.homeModules.profile-chris = {...}: {
-    home.sessionVariables.NIXOS_SECRETS_PATH = "/home/chris/nixos/secrets.nix";
-
     imports = [
       # For easy connection to servers
       inputs.k3s-cluster.homeModules.ssh
