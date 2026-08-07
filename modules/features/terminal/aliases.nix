@@ -7,7 +7,7 @@
       rebuild = "nh os switch ${config.home.homeDirectory}/nixos -- --impure";
       update = "nh os switch --update ${config.home.homeDirectory}/nixos -- --impure";
       clean = "nh clean all --keep 3 && rm -rf ~/.local/share/Trash/*";
-      usage = "gdu /";
+      usage = "sudo gdu /";
       store-map = "nix-tree -- /run/current-system";
       roots = "nix-store --gc --print-roots | grep -v '/proc/'";
       hms = "home-manager switch --flake $FLAKE#$(hostname)";

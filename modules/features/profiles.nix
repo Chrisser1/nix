@@ -7,7 +7,6 @@
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
-      self.homeModules.snappy-switcher
 
       # Terminal
       self.homeModules.cli
@@ -44,7 +43,6 @@
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
-      self.homeModules.snappy-switcher
 
       # Terminal
       self.homeModules.cli

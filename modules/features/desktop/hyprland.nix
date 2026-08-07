@@ -185,6 +185,7 @@
         hl.bind(mod .. " + T",         hl.dsp.exec_cmd("noctalia msg settings-toggle"))
         hl.bind(mod .. " + R",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
         hl.bind("ALT + Space",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
+        hl.bind("ALT + Tab",           hl.dsp.exec_cmd("noctalia msg window-switcher"))
         hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("firefox-devedition https://github.com/Chrisser1"))
         hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
 
