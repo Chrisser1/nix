@@ -16,7 +16,7 @@ order = [ "Chrisser" ]
         fill = "surface_variant"
         foreground = "primary"
         id = "g1"
-        members = [ "volume", "battery", "brightness", "bluetooth", "wallpaper", "mpvpaper_2" ]
+        members = [ "volume", "battery", "brightness", "bluetooth", "wallpaper", "gslapper" ]
         opacity = 1.0
         padding = 6.0
 
@@ -112,11 +112,12 @@ widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-login-box@HDMI-A-2" ]
         input_radius = 6.0
         show_login_button = true
 
-[plugin_settings."noctalia/mpvpaper"]
+[plugin_settings."nomadcxx/gslapper"]
+hidden_behavior = "auto-pause"
 video_directory = "@FLAKE@/assets/backgrounds/animated"
 
 [plugins]
-enabled = [ "noctalia/translator", "noctalia/mpvpaper" ]
+enabled = [ "noctalia/translator", "nomadcxx/gslapper" ]
 
     [[plugins.source]]
     kind = "git"
@@ -165,11 +166,8 @@ capsule = true
 hide_when_no_media = true
 title_scroll = "on_hover"
 
-[widget.mpvpaper]
-type = "noctalia/mpvpaper:mpvpaper"
-
-[widget.mpvpaper_2]
-type = "noctalia/mpvpaper:mpvpaper"
+[widget.gslapper]
+type = "nomadcxx/gslapper:wallpaper"
 
 [widget.workspaces]
 capsule = true

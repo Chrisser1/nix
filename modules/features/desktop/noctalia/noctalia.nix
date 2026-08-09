@@ -13,7 +13,22 @@
 
   flake.homeModules.noctalia = { pkgs, lib, ... }: 
   let
-    hyprctl = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/bin/hyprctl";
+    system = pkgs.stdenv.hostPlatform.system;
+    hyprctl = "${inputs.hyprland.packages.${system}.hyprland}/bin/hyprctl";
+
+    # The gslapper plugin shells out to a bare `gst-launch-1.0` to build video
+    # thumbnails for the picker, so it needs decoders on GST_PLUGIN_SYSTEM_PATH.
+    # gslapper's own binary is already wrapped upstream.
+    gstPlugins = with pkgs.gst_all_1; [gstreamer.out gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav];
+    gstLaunch = pkgs.symlinkJoin {
+      name = "gst-launch-wrapped";
+      paths = [pkgs.gst_all_1.gstreamer];
+      nativeBuildInputs = [pkgs.makeWrapper];
+      postBuild = ''
+        wrapProgram $out/bin/gst-launch-1.0 \
+          --prefix GST_PLUGIN_SYSTEM_PATH_1_0 : "${lib.makeSearchPath "lib/gstreamer-1.0" gstPlugins}"
+      '';
+    };
     noctaliaHyprExtra = pkgs.writeShellScriptBin "noctalia-hypr-extra" ''
       colors="$HOME/.config/noctalia/colors.json"
       out="$HOME/.config/hypr/noctalia-extra.lua"
@@ -56,9 +71,10 @@
         subst (builtins.fromTOML (builtins.readFile "${self}/assets/noctalia-config.toml"));
     };
 
-    home.packages = with pkgs; [
+    home.packages = [
       noctaliaHyprExtra
-      mpvpaper
+      gstLaunch
+      inputs.gslapper.packages.${system}.default
     ];
 
     systemd.user.services.noctalia-hypr-extra = {
