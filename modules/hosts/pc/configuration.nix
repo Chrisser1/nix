@@ -41,6 +41,14 @@
 
     boot.kernelParams = [
       "usbcore.autosuspend=-1"
+      # btusb is built with CONFIG_BT_HCIBTUSB_AUTOSUSPEND=y and calls
+      # usb_enable_autosuspend() on its own device at probe, which overrides
+      # usbcore.autosuspend=-1 for the BT radio specifically. A failed runtime
+      # suspend ("Failed to suspend device, error -110") wedged the MT7922
+      # Bluetooth (0e8d:0616, usb 1-12) on 2026-05-30; it stayed dead across
+      # every subsequent boot because the M.2 slot keeps +5VSB in S5, so only
+      # a standby-power cycle clears it.
+      "btusb.enable_autosuspend=0"
       "nvidia-drm.fbdev=1"
     ];
 
