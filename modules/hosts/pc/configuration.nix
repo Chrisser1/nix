@@ -14,7 +14,7 @@
       open = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
-      powerManagement.enable = false;
+      powerManagement.enable = true;
     };
 
     # Graphics stack
