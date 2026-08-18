@@ -24,7 +24,7 @@
       self.homeModules.clipboard
       self.homeModules.appearance
       self.homeModules.development
-      self.homeModules.jetbrains
+      # self.homeModules.jetbrains
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
@@ -57,7 +57,7 @@
       self.homeModules.clipboard
       self.homeModules.appearance
       self.homeModules.development
-      self.homeModules.jetbrains
+      # self.homeModules.jetbrains
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
