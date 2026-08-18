@@ -2,7 +2,6 @@
   flake.nixosModules.desktop-host = { ... }: {
     imports = [
       self.nixosModules.base-system
-      self.nixosModules.package-overrides
       self.nixosModules.tailscale
       self.nixosModules.bluetooth
       self.nixosModules.desktop
