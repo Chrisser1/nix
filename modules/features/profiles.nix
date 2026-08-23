@@ -32,6 +32,8 @@
       self.homeModules.bitwarden
       self.homeModules.hypr-screen-mirror
       self.homeModules.nix-monitor
+      self.homeModules.tailnet
+      self.homeModules.mini-docker
 
       # AI tools
       self.homeModules.claude-code
@@ -65,6 +67,8 @@
       self.homeModules.bitwarden
       self.homeModules.hypr-screen-mirror
       self.homeModules.nix-monitor
+      self.homeModules.tailnet
+      self.homeModules.mini-docker
 
       self.homeModules.work-mounts
 
