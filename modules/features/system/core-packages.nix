@@ -38,7 +38,7 @@
       poppler-utils
       texliveSmall
       # ocrmypdf
-      libreoffice-fresh
+      libreoffice-stable
 
       # --- Media / Visuals ---
       playerctl
