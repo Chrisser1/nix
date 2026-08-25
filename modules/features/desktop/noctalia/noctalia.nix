@@ -51,6 +51,43 @@
         HYPRLAND_INSTANCE_SIGNATURE="$hypr_sig" ${hyprctl} keyword group:groupbar:text_color_inactive "rgb(''${on_surf})"
       fi
     '';
+
+    # noctalia overlays $XDG_STATE_HOME/noctalia/settings.toml on top of the
+    # declarative config.toml, and deepMerge replaces arrays wholesale rather
+    # than merging them. A stale table written by the settings GUI therefore
+    # shadows this flake forever -- e.g. an old [bar.*] silently drops any
+    # capsule group added later. Prune the GUI-writable tables on activation so
+    # assets/noctalia-config.toml stays the source of truth; wallpaper picks and
+    # config_version are app-managed state and stay put.
+    noctaliaPruneOverrides = pkgs.writeShellScriptBin "noctalia-prune-overrides" ''
+      state="''${NOCTALIA_STATE_HOME:-''${XDG_STATE_HOME:-$HOME/.local/state}}/noctalia"
+      settings="$state/settings.toml"
+      [ -f "$settings" ] || exit 0
+
+      managed="bar calendar desktop_widgets dock location lockscreen_widgets plugin_settings plugins theme widget"
+
+      tmp=$(mktemp)
+      ${pkgs.gawk}/bin/awk -v managed=" $managed " '
+        # Only column-0 headers open a section; indented ones belong to the
+        # section above them.
+        /^\[/ {
+          head = $0
+          sub(/^\[+/, "", head)
+          root = match(head, /^[^.\]]+/) ? substr(head, 1, RLENGTH) : ""
+          skip = index(managed, " " root " ") > 0
+          if (skip) pruned[root] = 1
+        }
+        !skip
+        END {
+          for (k in pruned) list = list (list ? ", " : "") k
+          if (list) print "noctalia: pruned stale runtime overrides: " list > "/dev/stderr"
+        }
+      ' "$settings" > "$tmp"
+
+      # Write in place -- noctalia watches this file by path and reloads itself.
+      cmp -s "$tmp" "$settings" || cat "$tmp" > "$settings"
+      rm -f "$tmp"
+    '';
   in {
     imports = [inputs.noctalia.homeModules.default];
     programs.noctalia = {
@@ -73,6 +110,7 @@
 
     home.packages = [
       noctaliaHyprExtra
+      noctaliaPruneOverrides
       gstLaunch
       inputs.gslapper.packages.${system}.default
     ];
@@ -101,6 +139,10 @@
         touch "$HOME/.config/hypr/noctalia-extra.lua"
       fi
       ${noctaliaHyprExtra}/bin/noctalia-hypr-extra || true
+    '';
+
+    home.activation.noctaliaPruneOverrides = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      ${noctaliaPruneOverrides}/bin/noctalia-prune-overrides || true
     '';
   };
 }
