@@ -3,12 +3,12 @@ order = [ "Chrisser" ]
 
     [bar.Chrisser]
     center = [ "workspaces" ]
-    end = [ "group:g4", "group:g1", "group:g2" ]
+    end = [ "group:g4", "group:g6", "group:g1", "group:g2" ]
     font_family = "CaskaydiaCove Nerd Font"
     margin_edge = 0
     margin_ends = 0
     radius = 0
-    start = [ "group:g3", "group:g6", "group:g5" ]
+    start = [ "group:g3", "group:g5" ]
     widget_spacing = 10
 
         [[bar.Chrisser.capsule_group]]
@@ -105,7 +105,7 @@ auto_hide = true
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-4", "lockscreen-login-box@HDMI-A-2" ]
+widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@DP-4", "lockscreen-login-box@HDMI-A-2" ]
 
     [lockscreen_widgets.grid]
     cell_size = 16
