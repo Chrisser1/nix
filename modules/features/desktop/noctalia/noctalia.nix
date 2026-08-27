@@ -18,8 +18,7 @@
 
     # The gslapper plugin shells out to a bare `gst-launch-1.0` to build video
     # thumbnails for the picker, so it needs decoders on GST_PLUGIN_SYSTEM_PATH.
-    # gslapper's own binary is already wrapped upstream.
-    gstPlugins = with pkgs.gst_all_1; [gstreamer.out gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav];
+    gstPlugins = with pkgs.gst_all_1; [gstreamer.out gst-plugins-base gst-plugins-good gst-plugins-bad gst-libav gst-plugins-ugly];
     gstLaunch = pkgs.symlinkJoin {
       name = "gst-launch-wrapped";
       paths = [pkgs.gst_all_1.gstreamer];
@@ -29,6 +28,13 @@
           --prefix GST_PLUGIN_SYSTEM_PATH_1_0 : "${lib.makeSearchPath "lib/gstreamer-1.0" gstPlugins}"
       '';
     };
+    gslapper = inputs.gslapper.packages.${system}.default.overrideAttrs (_: {
+      postFixup = ''
+        wrapProgram $out/bin/gslapper \
+          --prefix GST_PLUGIN_SYSTEM_PATH_1_0 : "${lib.makeSearchPath "lib/gstreamer-1.0" gstPlugins}"
+      '';
+    });
+
     noctaliaHyprExtra = pkgs.writeShellScriptBin "noctalia-hypr-extra" ''
       colors="$HOME/.config/noctalia/colors.json"
       out="$HOME/.config/hypr/noctalia-extra.lua"
@@ -112,7 +118,7 @@
       noctaliaHyprExtra
       noctaliaPruneOverrides
       gstLaunch
-      inputs.gslapper.packages.${system}.default
+      gslapper
     ];
 
     systemd.user.services.noctalia-hypr-extra = {

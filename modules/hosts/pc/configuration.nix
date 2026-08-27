@@ -17,6 +17,8 @@
       powerManagement.enable = true;
     };
 
+    boot.kernelModules = ["nvidia_uvm"];
+
     # Graphics stack
     hardware.graphics = {
       enable = true;
