@@ -9,6 +9,9 @@
       "media.hardware-video-decoding.force-enabled" = true; # Firefox 137+
       "media.ffmpeg.vaapi.enabled" = true; # pre-137 fallback, harmless now
       "media.rdd-ffmpeg.enabled" = true;
+
+      # WebGPU for 02561 Computer Graphics
+      "dom.webgpu.enabled" = true;
     };
   };
 }
