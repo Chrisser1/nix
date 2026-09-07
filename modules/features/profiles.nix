@@ -34,6 +34,7 @@
       self.homeModules.nix-monitor
       self.homeModules.tailnet
       self.homeModules.mini-docker
+      self.homeModules.screenshot-satty
 
       # AI tools
       self.homeModules.claude-code
@@ -69,6 +70,7 @@
       self.homeModules.nix-monitor
       self.homeModules.tailnet
       self.homeModules.mini-docker
+      self.homeModules.screenshot-satty
 
       self.homeModules.work-mounts
 
