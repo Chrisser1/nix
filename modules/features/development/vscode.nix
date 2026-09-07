@@ -97,6 +97,15 @@
             ]);
         };
 
+        RiscV = {
+          extensions =
+            commonExtensions
+            ++ (with marketplace; [
+              hm.riscv-venus
+              sunshaoce.risc-v
+            ]);
+        };
+
         WebGPU = {
           extensions =
             commonExtensions
@@ -115,6 +124,9 @@
         };
       };
     };
+
+    # Graphical RISC-V simulator used from lab 3 onwards
+    home.packages = [ pkgs.ripes ];
 
     home.activation.boostrapVscodeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
       # Function to force-update a profile from source.
@@ -158,6 +170,7 @@
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Cpp"
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Rust"
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/Zig"
+      bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/RiscV" "${./vscode-settings-riscv.json}"
       bootstrap_profile "${config.home.homeDirectory}/.config/Code/User/profiles/WebGPU" "${./vscode-settings-webgpu.json}"
     '';
   };
