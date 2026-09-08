@@ -1,22 +1,6 @@
 { inputs, ... }: {
   flake.nixosModules.vscode = {...}: {
-    nixpkgs.overlays = [
-      inputs.nix-vscode-extensions.overlays.default
-
-      # nixpkgs strips resources/app/node_modules.asar.unpacked on Linux, but
-      # VS Code >= 1.129 fetches onig.wasm / tree-sitter.wasm from there.
-      # Without it TextMate tokenization fails and all highlighting dies.
-      # Drop this once nixpkgs fixes the Linux branch of vscode/generic.nix.
-      (final: prev: {
-        vscode = prev.vscode.overrideAttrs (old: {
-          postFixup = (old.postFixup or "") + ''
-            app="$out/lib/vscode/resources/app"
-            chmod u+w "$app"
-            ln -s node_modules "$app/node_modules.asar.unpacked"
-          '';
-        });
-      })
-    ];
+    nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
   };
 
   flake.homeModules.vscode = { pkgs, config, lib, ... }: 
