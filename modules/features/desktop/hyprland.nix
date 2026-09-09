@@ -206,6 +206,13 @@
         hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
         hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("noctalia msg brightness-up"),   { locked = true, repeating = true })
         hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true })
+        hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("noctalia msg volume-mute"), { locked = true })
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("noctalia msg volume-down"), { locked = true, repeating = true })
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia msg volume-up"),   { locked = true, repeating = true })
+
+        -- Fn+F8 sends no keysym of its own: the firmware emits the Windows
+        -- emoji shortcut, SUPER + period.
+        hl.bind(mod .. " + period",     hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"))
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))
 
