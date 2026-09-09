@@ -29,6 +29,19 @@
   let
     terminal = "${pkgs.kitty}/bin/kitty";
     fm = "${pkgs.nautilus}/bin/nautilus";
+
+    # F4 is a single keyboard-backlight key (this chassis has no matching
+    # "down" key), so step through the four asus::kbd_backlight levels and
+    # wrap 3 -> 0. noctalia owns the OSD, hence keyboard-backlight-set
+    # rather than brightnessctl.
+    kbdBacklightCycle = pkgs.writeShellScript "kbd-backlight-cycle" ''
+      for d in /sys/class/leds/*kbd_backlight; do dev="$d"; break; done
+      [ -e "$dev/brightness" ] || exit 0
+      cur=$(cat "$dev/brightness")
+      max=$(cat "$dev/max_brightness")
+      next=$(( (cur + 1) % (max + 1) ))
+      noctalia msg keyboard-backlight-set $(( next * 100 / max ))
+    '';
   in {
     home.packages = with pkgs; [hyprpicker satty];
 
@@ -188,6 +201,11 @@
         hl.bind("ALT + Tab",           hl.dsp.exec_cmd("noctalia msg window-switcher"))
         hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("firefox-devedition https://github.com/Chrisser1"))
         hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
+
+        hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
+        hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
+        hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("noctalia msg brightness-up"),   { locked = true, repeating = true })
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true })
 
         hl.bind(mod .. " + P",         hl.dsp.exec_cmd("hyprpicker -a"))
 
