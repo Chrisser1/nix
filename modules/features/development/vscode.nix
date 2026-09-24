@@ -28,6 +28,7 @@
       james-yu.latex-workshop
       tintinweb.graphviz-interactive-preview
       usernamehw.errorlens
+      savh.json5-kit
     ];
   in {
     programs.vscode = {
