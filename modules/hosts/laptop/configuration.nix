@@ -5,6 +5,7 @@
 
     imports = [
       self.nixosModules.laptop-hardware
+      self.nixosModules.displaylink
     ];
 
     # Bootloader
