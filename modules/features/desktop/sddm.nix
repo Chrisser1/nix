@@ -1,6 +1,6 @@
 { self, inputs, ... }: {
   flake.nixosModules.sddm = { pkgs, ... }: {
-    imports = [ inputs.qylock.nixosModules.default ];
+    imports = [ inputs.qylock.nixosModules.default inputs.sigil-sddm.nixosModules.default ];
 
     services.xserver.enable = true;
 
@@ -24,9 +24,17 @@
       defaultSession = "hyprland";
     };
 
+    # Only for the qylock-lock lockscreen; the login screen is Sigil's.
     programs.qylock = {
       enable = true;
       theme = "pixel-sakura";
-    }; 
+      sddm.enable = false;
+    };
+
+    programs.sigil-sddm = {
+      enable = true;
+      # systemInfo = true;                           # the system panel down the left
+      # settings.effects.lightning.enabled = false;  # anything from the theme's figure.json5
+    };
   };
 }

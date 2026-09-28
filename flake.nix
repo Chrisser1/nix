@@ -29,7 +29,12 @@
     };
     claude-code.url = "github:sadjow/claude-code-nix";
     qylock.url = "github:Darkkal44/qylock";
-  
+    
+    sigil-sddm = {
+      url = "git+file:///home/chris/repos/sigil-sddm-theme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     grubermeister.url = "github:N1njaflam1ng0/grubermeister";
 
     k3s-cluster.url = "github:Clusterforgers/k3s-cluster";
