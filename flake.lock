@@ -832,11 +832,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790606351,
-        "narHash": "sha256-2qeJ//PZCiq5a09oMKfMvn6UySnFrLC/o5aL2uG9x98=",
+        "lastModified": 1790661337,
+        "narHash": "sha256-Ade0rcprxM+M3rE/zFMUQtNkI/oJ1iZgOGUoG/bXLsM=",
         "ref": "refs/heads/main",
-        "rev": "eb3f79623436c8f0e4ba6326d6e1f596369ab016",
-        "revCount": 14,
+        "rev": "0027a4e736f82d001f154a91de7f7b973275d2a2",
+        "revCount": 16,
         "type": "git",
         "url": "file:///home/chris/repos/sigil-sddm-theme"
       },

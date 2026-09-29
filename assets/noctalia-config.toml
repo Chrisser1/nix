@@ -102,6 +102,10 @@ widget_order = []
 [dock]
 auto_hide = true
 
+# Locking is sigil-lock's (modules/features/desktop/sigil-lock.nix).
+[lockscreen]
+enabled = false
+
 [lockscreen_widgets]
 enabled = false
 schema_version = 2

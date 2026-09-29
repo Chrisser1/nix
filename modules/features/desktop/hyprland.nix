@@ -200,7 +200,7 @@
         hl.bind("ALT + Space",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
         hl.bind("ALT + Tab",           hl.dsp.exec_cmd("noctalia msg window-switcher"))
         hl.bind(mod .. " + SHIFT +G",   hl.dsp.exec_cmd("firefox-devedition https://github.com/Chrisser1"))
-        hl.bind(mod .. " + L",         hl.dsp.exec_cmd("noctalia msg session lock"))
+        hl.bind(mod .. " + L",         hl.dsp.exec_cmd("sigil-lock"))
 
         hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
         hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })

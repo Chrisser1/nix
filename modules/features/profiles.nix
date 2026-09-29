@@ -7,6 +7,7 @@
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
+      self.homeModules.sigil-lock
 
       # Terminal
       self.homeModules.cli
@@ -46,6 +47,7 @@
       # Window manager and related packages
       self.homeModules.hyprland
       self.homeModules.noctalia
+      self.homeModules.sigil-lock
 
       # Terminal
       self.homeModules.cli
