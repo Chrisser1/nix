@@ -32,6 +32,7 @@
       # Dev Tools
       devenv
       obsidian
+      blender
     ];
 
     # --- Session Paths ---
