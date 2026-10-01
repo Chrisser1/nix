@@ -22,6 +22,10 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland.url = "github:hyprwm/Hyprland";
     split-monitor-workspaces = {
       url = "github:zjeffer/split-monitor-workspaces";
