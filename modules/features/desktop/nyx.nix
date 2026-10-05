@@ -4,7 +4,8 @@
     programs.nyx.calendar.enable = true;
   };
 
-  # The nyx shell (~/repos/nyx). Swapped in for noctalia-desktop in profiles.nix.
+  # The nyx shell (~/repos/nyx). To return to noctalia, import nixosModules.noctalia
+  # in hosts/shared.nix and swap this for noctalia-desktop in profiles.nix.
   flake.homeModules.nyx = { pkgs, lib, ... }: {
     imports = [ inputs.nyx.homeModules.default ];
 

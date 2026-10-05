@@ -151,7 +151,7 @@
         hl.animation({ leaf = "workspacesIn",  enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
         hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 
-        -- The desktop shell (noctalia or nyx) appends its startup, theme and
+        -- The desktop shell (nyx) appends its startup, theme and
         -- binds after this block; see its home module.
         local _hypr_dir = (os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")) .. "/hypr"
         package.path = _hypr_dir .. "/?.lua;" .. package.path
