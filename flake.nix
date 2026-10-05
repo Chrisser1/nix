@@ -35,7 +35,7 @@
     qylock.url = "github:Darkkal44/qylock";
     
     nyx = {
-      url = "git+file:///home/chris/repos/nyx";
+      url = "git+ssh://git@github.com/Chrisser1/nyx";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.gslapper.follows = "gslapper";
       inputs.flake-parts.follows = "flake-parts";
