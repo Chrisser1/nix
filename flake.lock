@@ -786,6 +786,35 @@
         "type": "github"
       }
     },
+    "nyx": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "gslapper": [
+          "gslapper"
+        ],
+        "import-tree": [
+          "import-tree"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791201825,
+        "narHash": "sha256-7JscN2xHLr/lHm0lh2cc8/W2VdJy9EtMI4VRx0KN3qg=",
+        "ref": "refs/heads/main",
+        "rev": "32bfaa082890e3235f01c47abeceded7f5b9f7f5",
+        "revCount": 4,
+        "type": "git",
+        "url": "file:///home/chris/repos/nyx"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/chris/repos/nyx"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -842,6 +871,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_5",
         "noctalia": "noctalia",
+        "nyx": "nyx",
         "qylock": "qylock",
         "sigil-sddm": "sigil-sddm",
         "split-monitor-workspaces": "split-monitor-workspaces"

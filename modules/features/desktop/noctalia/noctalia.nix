@@ -11,7 +11,20 @@
     };
   };
 
-  flake.homeModules.noctalia = { pkgs, lib, ... }: 
+  # noctalia and its plugins as one import, so profiles swap shells in one line.
+  flake.homeModules.noctalia-desktop = { ... }: {
+    imports = [
+      self.homeModules.noctalia
+      self.homeModules.bitwarden
+      self.homeModules.hypr-screen-mirror
+      self.homeModules.nix-monitor
+      self.homeModules.tailnet
+      self.homeModules.mini-docker
+      self.homeModules.screenshot-satty
+    ];
+  };
+
+  flake.homeModules.noctalia = { pkgs, lib, ... }:
   let
     system = pkgs.stdenv.hostPlatform.system;
     hyprctl = "${inputs.hyprland.packages.${system}.hyprland}/bin/hyprctl";
@@ -34,6 +47,19 @@
           --prefix GST_PLUGIN_SYSTEM_PATH_1_0 : "${lib.makeSearchPath "lib/gstreamer-1.0" gstPlugins}"
       '';
     });
+
+    # F4 is a single keyboard-backlight key (this chassis has no matching
+    # "down" key), so step through the four asus::kbd_backlight levels and
+    # wrap 3 -> 0. noctalia owns the OSD, hence keyboard-backlight-set
+    # rather than brightnessctl.
+    kbdBacklightCycle = pkgs.writeShellScript "kbd-backlight-cycle" ''
+      for d in /sys/class/leds/*kbd_backlight; do dev="$d"; break; done
+      [ -e "$dev/brightness" ] || exit 0
+      cur=$(cat "$dev/brightness")
+      max=$(cat "$dev/max_brightness")
+      next=$(( (cur + 1) % (max + 1) ))
+      noctalia msg keyboard-backlight-set $(( next * 100 / max ))
+    '';
 
     noctaliaHyprExtra = pkgs.writeShellScriptBin "noctalia-hypr-extra" ''
       colors="$HOME/.config/noctalia/colors.json"
@@ -113,6 +139,41 @@
       in
         subst (builtins.fromTOML (builtins.readFile "${self}/assets/noctalia-config.toml"));
     };
+
+    programs.kitty.extraConfig = lib.mkAfter "include themes/noctalia.conf";
+
+    wayland.windowManager.hyprland.extraConfig = lib.mkAfter ''
+      hl.on("hyprland.start", function()
+        -- Delay lets the compositor finish registering all outputs (DP-7, DP-8)
+        -- before noctalia's HotCorners init iterates over them; without this it
+        -- segfaults on multi-monitor setups where external displays are still
+        -- negotiating when hyprland.start fires.
+        hl.exec_cmd("bash -c 'sleep 2 && noctalia --daemon'")
+      end)
+
+      require("noctalia").apply_theme()
+      dofile(_hypr_dir .. "/noctalia-extra.lua")
+
+      hl.bind(mod .. " + SHIFT +S",   hl.dsp.exec_cmd("noctalia msg screenshot-region"))
+      hl.bind(mod .. " + U",         hl.dsp.exec_cmd("noctalia msg panel-toggle session"))
+      hl.bind(mod .. " + V",         hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
+      hl.bind(mod .. " + T",         hl.dsp.exec_cmd("noctalia msg settings-toggle"))
+      hl.bind(mod .. " + R",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
+      hl.bind("ALT + Space",         hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
+      hl.bind("ALT + Tab",           hl.dsp.exec_cmd("noctalia msg window-switcher"))
+
+      hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
+      hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("${kbdBacklightCycle}"), { locked = true })
+      hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("noctalia msg brightness-up"),   { locked = true, repeating = true })
+      hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true })
+      hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("noctalia msg volume-mute"), { locked = true })
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("noctalia msg volume-down"), { locked = true, repeating = true })
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia msg volume-up"),   { locked = true, repeating = true })
+
+      -- Fn+F8 sends no keysym of its own: the firmware emits the Windows
+      -- emoji shortcut, SUPER + period.
+      hl.bind(mod .. " + period",     hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"))
+    '';
 
     home.packages = [
       noctaliaHyprExtra
