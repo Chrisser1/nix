@@ -26,25 +26,10 @@
 
     services.cliphist.enable = false;
 
-    # Backs the nyx Bitwarden launcher mode. pinentry-qt is Qt6, so it needs the
-    # qt6ct platform theme to pick up the colours nyx-theme writes.
-    programs.rbw = {
-      enable = true;
-      settings = {
-        email = "chrisgthomsen0310@gmail.com";
-        pinentry = pkgs.symlinkJoin {
-          name = "pinentry-qt-themed";
-          paths = [ pkgs.pinentry-qt ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          meta.mainProgram = "pinentry";
-          postBuild = ''
-            wrapProgram $out/bin/pinentry \
-              --set QT_QPA_PLATFORMTHEME qt6ct \
-              --prefix QT_PLUGIN_PATH : ${pkgs.kdePackages.qt6ct}/lib/qt-6/plugins
-          '';
-        };
-      };
-    };
+    # Backs the nyx Bitwarden launcher mode. nyx-bitwarden writes rbw's config
+    # (email, region, pinentry) at login, so it must stay mutable and not come
+    # from programs.rbw.
+    home.packages = [ pkgs.rbw ];
 
     # noctalia replaced these with mutable copies.
     xdg.configFile."gtk-3.0/gtk.css".force = true;
