@@ -6,7 +6,7 @@
 
       # Window manager and related packages
       self.homeModules.hyprland
-      self.homeModules.noctalia-desktop
+      self.homeModules.nyx
       self.homeModules.sigil-lock
 
       # Terminal

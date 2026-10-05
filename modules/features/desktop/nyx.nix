@@ -47,6 +47,7 @@
       hl.bind(mod .. " + R",         nyx("toggleLauncher"))
       hl.bind("ALT + Space",         nyx("toggleLauncher"))
       hl.bind(mod .. " + W",         nyx("toggleWallpaper"))
+      hl.bind(mod .. " + SHIFT + W", nyx("toggleTheme"))
       hl.bind(mod .. " + M",         nyx("toggleDisplays"))
       hl.bind(mod .. " + N",         nyx("toggleNotifications"))
       hl.bind(mod .. " + BackSpace", nyx("discardLastNotification"))
