@@ -22,6 +22,10 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprland.url = "github:hyprwm/Hyprland";
     split-monitor-workspaces = {
       url = "github:zjeffer/split-monitor-workspaces";
@@ -30,6 +34,14 @@
     claude-code.url = "github:sadjow/claude-code-nix";
     qylock.url = "github:Darkkal44/qylock";
     
+    nyx = {
+      url = "git+file:///home/chris/repos/nyx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.gslapper.follows = "gslapper";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.import-tree.follows = "import-tree";
+    };
+
     sigil-sddm = {
       url = "github:Clusterforgers/sigil-sddm-theme";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -11,7 +11,6 @@
         window_padding_width = 4;
         hide_window_decorations = "yes";
       };
-      extraConfig = "include themes/noctalia.conf";
     };
   };
 }

@@ -6,7 +6,7 @@
       gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
     };
 
-    # Qt theming via qt6ct/qt5ct — select the noctalia color scheme in qt6ct after first run
+    # Qt theming via qt6ct/qt5ct — select the shell's colour scheme in qt6ct after first run
     qt = {
       enable = true;
       platformTheme.name = "qtct";

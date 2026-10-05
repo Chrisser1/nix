@@ -6,7 +6,7 @@
 
       # Window manager and related packages
       self.homeModules.hyprland
-      self.homeModules.noctalia
+      self.homeModules.nyx
       self.homeModules.sigil-lock
 
       # Terminal
@@ -30,12 +30,6 @@
       self.homeModules.vscode
       self.homeModules.wdisplays
       self.homeModules.gromit-mpx
-      self.homeModules.bitwarden
-      self.homeModules.hypr-screen-mirror
-      self.homeModules.nix-monitor
-      self.homeModules.tailnet
-      self.homeModules.mini-docker
-      self.homeModules.screenshot-satty
 
       # AI tools
       self.homeModules.claude-code
@@ -46,7 +40,7 @@
     imports = [
       # Window manager and related packages
       self.homeModules.hyprland
-      self.homeModules.noctalia
+      self.homeModules.nyx
       self.homeModules.sigil-lock
 
       # Terminal
@@ -67,12 +61,6 @@
       self.homeModules.vscode
       self.homeModules.wdisplays
       self.homeModules.gromit-mpx
-      self.homeModules.bitwarden
-      self.homeModules.hypr-screen-mirror
-      self.homeModules.nix-monitor
-      self.homeModules.tailnet
-      self.homeModules.mini-docker
-      self.homeModules.screenshot-satty
 
       self.homeModules.work-mounts
 

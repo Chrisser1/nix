@@ -11,7 +11,7 @@
 
       # System requirements for packages
       self.nixosModules.hyprland
-      self.nixosModules.noctalia
+      self.nixosModules.nyx
       self.nixosModules.core-packages
       self.nixosModules.noise-cancellation
       self.nixosModules.fonts
