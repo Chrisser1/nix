@@ -26,12 +26,23 @@
 
     services.cliphist.enable = false;
 
-    # Backs the nyx Bitwarden launcher mode.
+    # Backs the nyx Bitwarden launcher mode. pinentry-qt is Qt6, so it needs the
+    # qt6ct platform theme to pick up the colours nyx-theme writes.
     programs.rbw = {
       enable = true;
       settings = {
         email = "chrisgthomsen0310@gmail.com";
-        pinentry = pkgs.pinentry-qt;
+        pinentry = pkgs.symlinkJoin {
+          name = "pinentry-qt-themed";
+          paths = [ pkgs.pinentry-qt ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          meta.mainProgram = "pinentry";
+          postBuild = ''
+            wrapProgram $out/bin/pinentry \
+              --set QT_QPA_PLATFORMTHEME qt6ct \
+              --prefix QT_PLUGIN_PATH : ${pkgs.kdePackages.qt6ct}/lib/qt-6/plugins
+          '';
+        };
       };
     };
 
