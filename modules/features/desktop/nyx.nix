@@ -25,6 +25,15 @@
 
     services.cliphist.enable = false;
 
+    # Backs the nyx Bitwarden launcher mode.
+    programs.rbw = {
+      enable = true;
+      settings = {
+        email = "chrisgthomsen0310@gmail.com";
+        pinentry = pkgs.pinentry-qt;
+      };
+    };
+
     # noctalia replaced these with mutable copies.
     xdg.configFile."gtk-3.0/gtk.css".force = true;
     xdg.configFile."gtk-4.0/gtk.css".force = true;
@@ -46,11 +55,19 @@
       hl.bind(mod .. " + T",         nyx("toggleSystem"))
       hl.bind(mod .. " + R",         nyx("toggleLauncher"))
       hl.bind("ALT + Space",         nyx("toggleLauncher"))
+      hl.bind("ALT + Tab",           nyx("windowSwitcher"))
+      hl.bind("ALT + SHIFT + Tab",   nyx("windowSwitcherBack"))
+      hl.bind("ALT + ALT_L",         nyx("windowSwitcherCommit"), { release = true, non_consuming = true })
       hl.bind(mod .. " + W",         nyx("toggleWallpaper"))
       hl.bind(mod .. " + SHIFT + W", nyx("toggleTheme"))
       hl.bind(mod .. " + M",         nyx("toggleDisplays"))
+      hl.bind(mod .. " + SHIFT + D", nyx("toggleDocker"))
+      hl.bind(mod .. " + SHIFT + T", nyx("toggleTailnet"))
+      hl.bind(mod .. " + B",         nyx("toggleBitwarden"))
       hl.bind(mod .. " + N",         nyx("toggleNotifications"))
       hl.bind(mod .. " + BackSpace", nyx("discardLastNotification"))
+      -- Fn+F8 sends SUPER + period, the Windows emoji shortcut.
+      hl.bind(mod .. " + period",    nyx("toggleEmoji"))
 
       hl.bind("XF86KbdBrightnessUp",   hl.dsp.exec_cmd("nyx-kbd-backlight cycle"), { locked = true })
       hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd("nyx-kbd-backlight cycle"), { locked = true })

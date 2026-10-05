@@ -802,11 +802,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791205461,
-        "narHash": "sha256-UmWM9RgYpgaGpoOmBwLImFrXWCAmLuJ01wJ12rO5CsY=",
+        "lastModified": 1791208645,
+        "narHash": "sha256-Cin7ciGbltF66VmmEWLN2jX0PKxULkOnfx4IOMnkU24=",
         "ref": "refs/heads/main",
-        "rev": "7cb5c256d79665153f0634efa9cb462fea5f0a6b",
-        "revCount": 8,
+        "rev": "b2afeeded7146e8b2a9a15d9a2593793e615f9b0",
+        "revCount": 14,
         "type": "git",
         "url": "file:///home/chris/repos/nyx"
       },
