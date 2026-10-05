@@ -39,6 +39,8 @@
 
     # Locale / time / console
     time.timeZone = "Europe/Copenhagen";
+    # Without it GLib cannot find the zone files on NixOS, and GNOME Calendar aborts.
+    environment.sessionVariables.TZDIR = "/etc/zoneinfo";
     i18n.defaultLocale = "en_US.UTF-8";
     i18n.supportedLocales = ["en_US.UTF-8/UTF-8"];
     i18n.extraLocaleSettings = {
