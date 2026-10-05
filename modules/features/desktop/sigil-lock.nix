@@ -1,7 +1,9 @@
 { inputs, ... }: {
   flake.homeModules.sigil-lock = { pkgs, lib, osConfig, ... }:
   let
-    sigil = osConfig.programs.sigil-sddm.package;
+    sigil = lib.findFirst (p: lib.hasPrefix "sigil-sddm-theme" (p.name or ""))
+      (throw "sigil-lock: programs.sigil-sddm must be enabled")
+      osConfig.services.displayManager.sddm.extraPackages;
     shell = "${inputs.qylock}/quickshell-lockscreen";
 
     sigilLock = pkgs.writeShellScriptBin "sigil-lock" ''

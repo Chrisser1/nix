@@ -31,7 +31,7 @@
     qylock.url = "github:Darkkal44/qylock";
     
     sigil-sddm = {
-      url = "git+file:///home/chris/repos/sigil-sddm-theme";
+      url = "github:Clusterforgers/sigil-sddm-theme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
