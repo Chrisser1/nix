@@ -23,6 +23,7 @@
       self.nixosModules.vscode
       self.homeModules.firefox
       self.nixosModules.vesktop
+      self.nixosModules.stoat
       self.nixosModules.flatpak
     ];
 
