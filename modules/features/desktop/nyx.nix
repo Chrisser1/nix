@@ -16,6 +16,10 @@
       # Mod+D screen annotation; it is not a tray app to look at.
       tray.hidden = [ "wayscriber" ];
       lockCommand = "sigil-lock";
+      iconTheme = {
+        name = "candy-icons";
+        package = pkgs.candy-icons;
+      };
       wallpaper = {
         directory = "${self}/assets/backgrounds";
         default = "animated/large-cherry-blossom-tree.3840x2160.mp4";

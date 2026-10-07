@@ -831,11 +831,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791356978,
-        "narHash": "sha256-wTHIOaZrMhEf9YT0kcqk7DPe9iyVG6KMa86BvEJHU1g=",
+        "lastModified": 1791383445,
+        "narHash": "sha256-CK93rKRwCtt+KzHDv71H2rFufWOgwo19kGhyBhPVqM0=",
         "ref": "refs/heads/main",
-        "rev": "0eee5b921609893e0eaf7a7b31dbec7648634de8",
-        "revCount": 44,
+        "rev": "8add5dd738879f594f5650703a8cc77b60f0b7a7",
+        "revCount": 45,
         "type": "git",
         "url": "ssh://git@github.com/Chrisser1/nyx"
       },
