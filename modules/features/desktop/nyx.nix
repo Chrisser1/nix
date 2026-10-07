@@ -13,6 +13,8 @@
       enable = true;
       hyprlandPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       terminal = "kitty";
+      # Mod+D screen annotation; it is not a tray app to look at.
+      tray.hidden = [ "wayscriber" ];
       lockCommand = "sigil-lock";
       wallpaper = {
         directory = "${self}/assets/backgrounds";
