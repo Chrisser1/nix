@@ -29,7 +29,7 @@
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
-      self.homeModules.gromit-mpx
+      self.homeModules.wayscriber
 
       # AI tools
       self.homeModules.claude-code
@@ -60,7 +60,7 @@
       self.homeModules.search
       self.homeModules.vscode
       self.homeModules.wdisplays
-      self.homeModules.gromit-mpx
+      self.homeModules.wayscriber
 
       self.homeModules.work-mounts
 
