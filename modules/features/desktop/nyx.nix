@@ -38,6 +38,8 @@
     wayland.windowManager.hyprland.extraConfig = lib.mkAfter ''
       hl.on("hyprland.start", function()
         hl.exec_cmd("nyx-shell -d")
+        hl.exec_cmd("nyx-monitors restore")
+        hl.exec_cmd("nyx-monitors watch")
         hl.exec_cmd("nyx-wallpaper restore")
       end)
 
