@@ -63,6 +63,7 @@
       self.homeModules.wayscriber
 
       self.homeModules.work-mounts
+      self.homeModules.work-comms
 
       # AI tools
       self.homeModules.claude-code
