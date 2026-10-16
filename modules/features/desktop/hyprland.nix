@@ -81,6 +81,9 @@
             layout           = "dwindle",
           },
           group = {
+            -- New windows otherwise join the focused group as a tab and appear
+            -- stacked on top of it.
+            auto_group           = false,
             insert_after_current = true,
             focus_removed_window = true,
             groupbar = {
@@ -158,6 +161,14 @@
         local smw = require("plugins.split-monitor-workspaces")
         smw.setup({ workspace_count = 9 })
         dofile(_hypr_dir .. "/monitors.lua")
+
+        -- Apps re-requesting maximize on launch cover the whole workspace
+        -- instead of tiling. Fullscreen requests (games) are still honoured.
+        hl.window_rule({
+          name  = "no-app-maximize",
+          match = { class = ".*" },
+          suppress_event = "maximize",
+        })
 
         hl.window_rule({
           name  = "vesktop-no-blur",

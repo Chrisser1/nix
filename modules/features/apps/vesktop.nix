@@ -1,6 +1,18 @@
 { self, ... }: {
+  # Chromium's wp-fractional-scale-v1 support breaks with monitor scales below 1:
+  # the content renders at a fraction of the window. Without the protocol it
+  # renders at scale 1 and Hyprland scales the buffer instead.
   flake.nixosModules.vesktop = { pkgs, ... }: {
-    environment.systemPackages = [ pkgs.vesktop ];
+    environment.systemPackages = [
+      (pkgs.symlinkJoin {
+        name = "vesktop";
+        paths = [ pkgs.vesktop ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/vesktop --add-flags "--disable-features=WaylandFractionalScaleV1"
+        '';
+      })
+    ];
   };
 
   # Chromium's WebRTC enumerates every interface when gathering ICE candidates and

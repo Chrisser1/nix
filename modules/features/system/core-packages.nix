@@ -1,5 +1,18 @@
 {self, ...}: {
-  flake.nixosModules.core-packages = {pkgs, ...}: {
+  flake.nixosModules.core-packages = {pkgs, ...}:
+  let
+    # Spotify's CEF build draws its content shrunk when a monitor's scale is
+    # below 1 on native Wayland, and ignores Chromium's fractional-scale flags.
+    # Under XWayland Hyprland does the scaling, so the window fills correctly.
+    spotify = pkgs.symlinkJoin {
+      name = "spotify";
+      paths = [ pkgs.spotify ];
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/spotify --unset NIXOS_OZONE_WL --add-flags "--ozone-platform=x11"
+      '';
+    };
+  in {
     environment.systemPackages = with pkgs; [
       # --- System Utilities ---
       fastfetch
