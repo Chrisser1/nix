@@ -29,6 +29,7 @@
       tintinweb.graphviz-interactive-preview
       usernamehw.errorlens
       savh.json5-kit
+      anthropic.claude-code
     ];
   in {
     programs.vscode = {
