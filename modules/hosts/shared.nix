@@ -25,6 +25,9 @@
       self.nixosModules.vesktop
       self.nixosModules.stoat
       self.nixosModules.flatpak
+
+      # Cyper security tools
+      self.nixosModules.ofmc
     ];
 
     home-manager = {
