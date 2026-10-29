@@ -34,7 +34,7 @@
 
       # Dev Tools
       devenv
-      obsidian
+      (obsidian.override { electron = electron_44; })
       blender
     ];
 

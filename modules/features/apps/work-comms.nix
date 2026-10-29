@@ -1,10 +1,11 @@
-{ self, pkgs, ... }: let
-  # Copy just the one icon so the 250M Papirus theme stays out of the closure.
-  outlookIcon = pkgs.runCommand "outlook-icon.svg" { } ''
-    cp ${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/ms-outlook.svg $out
-  '';
-in {
-  flake.homeModules.work-comms = { config, pkgs, ... }: {
+{ self, ... }: {
+  flake.homeModules.work-comms = { config, pkgs, ... }:
+  let
+    # Copy just the one icon so the 250M Papirus theme stays out of the closure.
+    outlookIcon = pkgs.runCommand "outlook-icon.svg" { } ''
+      cp ${pkgs.papirus-icon-theme}/share/icons/Papirus/64x64/apps/ms-outlook.svg $out
+    '';
+  in {
     home.packages = [ pkgs.teams-for-linux ];
 
     xdg.desktopEntries.outlook = {
