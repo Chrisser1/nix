@@ -16,6 +16,7 @@
       dr = "dotnet run";
       dt = "dotnet test";
       ssh = "kitten ssh";
+      claude-friend = "CLAUDE_CONFIG_DIR=~/.claude-friend claude";
     };
   };
 }
